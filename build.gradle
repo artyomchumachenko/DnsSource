@@ -34,9 +34,9 @@ javafx {
 }
 
 dependencies {
-    implementation('org.hibernate:hibernate-core:6.1.4.Final')
+    implementation('org.hibernate:hibernate-core:3.6.0.Final')
     implementation('org.projectlombok:lombok:1.18.24')
-    implementation(group: 'mysql', name: 'mysql-connector-java', version: '8.0.28')
+    implementation(group: 'mysql', name: 'mysql-connector-java', version: '6.9.9')
 
     implementation('org.controlsfx:controlsfx:11.1.1')
     implementation('com.dlsc.formsfx:formsfx    -core:11.5.0') {
