@@ -1,4 +1,4 @@
-package ru.mai.coursework.dns.dnssource;
+package ru.mai.coursework.dns;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

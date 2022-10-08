@@ -1,4 +1,4 @@
-package ru.mai.coursework.dns.dnssource;
+package ru.mai.coursework.dns;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
