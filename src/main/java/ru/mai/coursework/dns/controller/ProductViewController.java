@@ -1,54 +1,63 @@
 package ru.mai.coursework.dns.controller;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import org.hibernate.Session;
 import ru.mai.coursework.dns.HibernateUtil;
-import ru.mai.coursework.dns.ProductHelper;
 import ru.mai.coursework.dns.entity.Product;
+import ru.mai.coursework.dns.helpers.ProductHelper;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public class ProductViewController extends MainFormController {
+    private static int lastProductIndexToLoad;
+    private static int startProductIndexToLoad = 0;
+    private static int currentButtonIndex = 0;
+    private static int amountProductsIndex = 0;
 
-    private static int currentPage = 0;
-    private static int indexProductInList = 0;
-    private static final String pathToDnsImage = "src\\main\\java\\ru\\mai\\coursework\\dns\\images\\dns..jpg";
+//    public static List<Product> takeProductList() {
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        List<Product> productList = new ProductHelper().getProductList();
+//        return productList;
+//    }
 
-    public static void loadButtonHandler(Button loadButton, List<Label> labels) {
-        loadButton.setStyle("-fx-border-color: #ff0000; -fx-border-width: thick;");
-        loadButton.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            loadButton.setText(String.valueOf(currentPage + 1));
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            List<Product> productList = new ProductHelper().getProductList();
-            int index = 0;
-            int maxIndexProduct = productList.size();
-            currentPage++;
-            for (int i = 0; i < 6; i++) {
-                if (index == 6) {
-                    index = -1;
-                }
-                if (indexProductInList == maxIndexProduct) {
-                    indexProductInList = 0;
-                    currentPage = 0;
-                    break;
-                }
-                labels.get(index).setText(productList.get(indexProductInList).getProductName());
-                index++;
-                indexProductInList++;
-            }
-        });
+    public static void initStartProducts(List<Button> buttons) {
+        currentButtonIndex = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Product> productList = new ProductHelper().getProductList();
+        amountProductsIndex = productList.size() - 1;
+        if (amountProductsIndex >= 4) {
+            lastProductIndexToLoad = 5;
+        }
+        for (int i = startProductIndexToLoad; i < lastProductIndexToLoad; i++) {
+            buttons.get(currentButtonIndex).setText(productList.get(startProductIndexToLoad).getProductName());
+            currentButtonIndex++;
+            startProductIndexToLoad++;
+        }
+        lastProductIndexToLoad += 5;
     }
 
-    public static void importImages(List<ImageView> leftList) throws FileNotFoundException {
-        Image image = new Image(new FileInputStream(pathToDnsImage));
-        for (ImageView img : leftList) {
-            img.setImage(image);
+    public static void loadNextProducts(List<Button> buttons) {
+        currentButtonIndex = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Product> productList = new ProductHelper().getProductList();
+        int addIndexes = -1;
+        if (lastProductIndexToLoad > amountProductsIndex) {
+            addIndexes = lastProductIndexToLoad - amountProductsIndex;
         }
+        for (int i = startProductIndexToLoad; i < lastProductIndexToLoad; i++) {
+            if (i == amountProductsIndex) {
+                startProductIndexToLoad = 0;
+                lastProductIndexToLoad = 0;
+                for (int j = 0; i < addIndexes; i++) {
+                    buttons.get(currentButtonIndex).setText(productList.get(j).getProductName());
+                    currentButtonIndex++;
+                }
+                break;
+            }
+            buttons.get(currentButtonIndex).setText(productList.get(startProductIndexToLoad).getProductName());
+            currentButtonIndex++;
+            startProductIndexToLoad++;
+        }
+        lastProductIndexToLoad += 5;
     }
 }

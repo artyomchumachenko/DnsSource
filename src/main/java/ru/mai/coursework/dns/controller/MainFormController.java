@@ -3,9 +3,13 @@ package ru.mai.coursework.dns.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import ru.mai.coursework.dns.loaders.ImageLoader;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -14,112 +18,139 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable {
-    public static List<Label> labelList = new LinkedList<>();
-    public static List<ImageView> imageLeftList = new LinkedList<>();
-    public static List<ImageView> imageRightList = new LinkedList<>();
-    @FXML
-    private Label gridLabel1;
 
     @FXML
-    private Label gridLabel2;
+    private Button pButton1;
 
     @FXML
-    private Label gridLabel3;
+    private Button pButton2;
 
     @FXML
-    private Label gridLabel4;
+    private Button pButton3;
 
     @FXML
-    private Label gridLabel5;
+    private Button pButton4;
 
     @FXML
-    private Label gridLabel6;
+    private Button pButton5;
 
     @FXML
-    private Label gridLabelName;
+    private ContextMenu pButtonCntxt1;
 
     @FXML
-    private GridPane gridPaneMain;
+    private ContextMenu pButtonCntxt2;
 
     @FXML
-    private ImageView imageView11;
+    private ContextMenu pButtonCntxt3;
 
     @FXML
-    private ImageView imageView12;
+    private ContextMenu pButtonCntxt4;
 
     @FXML
-    private ImageView imageView13;
+    private ContextMenu pButtonCntxt5;
 
     @FXML
-    private ImageView imageView14;
+    private ImageView pImage1;
 
     @FXML
-    private ImageView imageView15;
+    private ImageView pImage2;
 
     @FXML
-    private ImageView imageView16;
+    private ImageView pImage3;
 
     @FXML
-    private ImageView imageView21;
+    private ImageView pImage4;
 
     @FXML
-    private ImageView imageView22;
+    private ImageView pImage5;
 
     @FXML
-    private ImageView imageView23;
+    private Label pLabel;
 
     @FXML
-    private ImageView imageView24;
+    private Button priceButton1;
 
     @FXML
-    private ImageView imageView25;
+    private Button priceButton2;
 
     @FXML
-    private ImageView imageView26;
+    private Button priceButton3;
 
     @FXML
-    private Button loadButton;
+    private Button priceButton4;
 
-    private List<Label> getLabels() {
-        labelList.add(gridLabel1);
-        labelList.add(gridLabel2);
-        labelList.add(gridLabel3);
-        labelList.add(gridLabel4);
-        labelList.add(gridLabel5);
-        labelList.add(gridLabel6);
-        return labelList;
-    }
+    @FXML
+    private Button priceButton5;
 
-    private List<ImageView> getLeftImages() {
-        imageLeftList.add(imageView11);
-        imageLeftList.add(imageView12);
-        imageLeftList.add(imageView13);
-        imageLeftList.add(imageView14);
-        imageLeftList.add(imageView15);
-        imageLeftList.add(imageView16);
-        return imageLeftList;
-    }
+    @FXML
+    private VBox productsVBox;
 
-    private List<ImageView> getRightImages() {
-        imageRightList.add(imageView21);
-        imageRightList.add(imageView22);
-        imageRightList.add(imageView23);
-        imageRightList.add(imageView24);
-        imageRightList.add(imageView25);
-        imageRightList.add(imageView26);
-        return imageRightList;
-    }
+    @FXML
+    private Button regAccButton;
 
-    // Как отключить умный импорт
-    // Как отключить прилепание кнопок в JavaFX
+    @FXML
+    private Label searchLabel;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ProductViewController.loadButtonHandler(loadButton, getLabels());
+    @FXML
+    private TextField searchingField;
+
+    @FXML
+    private ImageView searchingImage;
+
+    @FXML
+    private Button signAccButton;
+
+    @FXML
+    private ImageView leftImage;
+
+    @FXML
+    private ImageView rightImage;
+
+    private void initAllImages() {
         try {
-            ProductViewController.importImages(getLeftImages());
+            ImageLoader.loaderDnsImage(pImage1);
+            ImageLoader.loaderDnsImage(pImage2);
+            ImageLoader.loaderDnsImage(pImage3);
+            ImageLoader.loaderDnsImage(pImage4);
+            ImageLoader.loaderDnsImage(pImage5);
+            ImageLoader.loaderSearchingImage(searchingImage);
+            ImageLoader.loaderLeftImage(leftImage);
+            ImageLoader.loaderRightImage(rightImage);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    List<Button> buttons = new LinkedList<>();
+
+    private void initFirstProducts() {
+        buttons.add(pButton1);
+        buttons.add(pButton2);
+        buttons.add(pButton3);
+        buttons.add(pButton4);
+        buttons.add(pButton5);
+        ProductViewController.initStartProducts(buttons);
+    }
+
+    private void imagesHandlers() {
+        searchingImage.setOnMouseClicked(event -> {
+            searchingField.setText("Я НАЖИМАЮ НА SEARCH IMAGE");
+        });
+        leftImage.setOnMouseClicked(event -> {
+            searchingField.setText("Я НАЖИМАЮ НА LEFT IMAGE");
+        });
+        rightImage.setOnMouseClicked(event -> {
+            searchingField.setText("Я НАЖИМАЮ НА RIGHT IMAGE");
+        });
+        rightImage.setOnMouseClicked(event -> {
+            ProductViewController.loadNextProducts(buttons);
+        });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initAllImages();
+        initFirstProducts();
+        imagesHandlers();
     }
 }
