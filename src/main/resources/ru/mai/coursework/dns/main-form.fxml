@@ -3,19 +3,27 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.MainFormController">
+<AnchorPane prefHeight="600.0" prefWidth="872.0" snapToPixel="false" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.MainFormController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <Label fx:id="gridLabelName" alignment="TOP_CENTER" prefHeight="18.0" prefWidth="378.0" text="Первые шесть товаров из таблицы @products" />
-    <GridPane fx:id="gridPaneMain" prefHeight="238.0" prefWidth="581.0">
+    <Label fx:id="gridLabelName" alignment="CENTER" layoutX="285.0" layoutY="31.0" prefHeight="47.0" prefWidth="436.0" text="Первые шесть товаров из таблицы @products">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+    <GridPane fx:id="gridPaneMain" layoutX="174.0" layoutY="78.0" prefHeight="392.0" prefWidth="658.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.199951171875" minWidth="10.0" prefWidth="45.199981689453125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.60003662109375" minWidth="10.0" prefWidth="481.8000183105469" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="40.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -26,17 +34,56 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       <children>
-            <Label fx:id="gridLabel1" alignment="CENTER" prefHeight="133.0" prefWidth="778.0" text="1" />
-            <Label fx:id="gridLabel2" alignment="CENTER" prefHeight="313.0" prefWidth="1099.0" text="2" GridPane.rowIndex="1" />
-            <Label fx:id="gridLabel3" alignment="CENTER" prefHeight="269.0" prefWidth="1030.0" text="3" GridPane.rowIndex="2" />
-            <Label fx:id="gridLabel4" alignment="CENTER" prefHeight="316.0" prefWidth="1021.0" text="4" GridPane.rowIndex="3" />
-            <Label fx:id="gridLabel5" alignment="CENTER" prefHeight="295.0" prefWidth="937.0" text="5" GridPane.rowIndex="4" />
-            <Label fx:id="gridLabel6" alignment="CENTER" prefHeight="276.0" prefWidth="889.0" text="6" GridPane.rowIndex="5" />
+            <Label fx:id="gridLabel1" alignment="CENTER" prefHeight="97.0" prefWidth="495.0" text="1" GridPane.columnIndex="1">
+            <font>
+               <Font name="Segoe UI Black" size="18.0" />
+            </font>
+         </Label>
+            <Label fx:id="gridLabel2" alignment="CENTER" prefHeight="313.0" prefWidth="1099.0" text="2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <font>
+               <Font name="Segoe UI Black" size="18.0" />
+            </font>
+         </Label>
+            <Label fx:id="gridLabel3" alignment="CENTER" prefHeight="269.0" prefWidth="1030.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <font>
+               <Font name="Segoe UI Black" size="18.0" />
+            </font>
+         </Label>
+            <Label fx:id="gridLabel4" alignment="CENTER" prefHeight="316.0" prefWidth="1021.0" text="4" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <font>
+               <Font name="Segoe UI Black" size="18.0" />
+            </font>
+         </Label>
+            <Label fx:id="gridLabel5" alignment="CENTER" prefHeight="295.0" prefWidth="937.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <font>
+               <Font name="Segoe UI Black" size="18.0" />
+            </font>
+         </Label>
+            <Label fx:id="gridLabel6" alignment="CENTER" prefHeight="276.0" prefWidth="889.0" text="6" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <font>
+               <Font name="Segoe UI Black" size="18.0" />
+            </font>
+         </Label>
+         <ImageView fx:id="imageView12" fitHeight="55.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+         <ImageView fx:id="imageView13" fitHeight="55.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+         <ImageView fx:id="imageView14" fitHeight="55.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
+         <ImageView fx:id="imageView15" fitHeight="55.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
+         <ImageView fx:id="imageView16" fitHeight="55.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" />
+         <ImageView fx:id="imageView11" fitHeight="55.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" />
+         <ImageView fx:id="imageView21" fitHeight="65.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+         <ImageView fx:id="imageView22" fitHeight="65.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+         <ImageView fx:id="imageView23" fitHeight="65.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+         <ImageView fx:id="imageView24" fitHeight="65.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+         <ImageView fx:id="imageView25" fitHeight="65.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+         <ImageView fx:id="imageView26" fitHeight="65.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
       </children>
     </GridPane>
-    <Button fx:id="loadButton" mnemonicParsing="false" text="Load">
-    </Button>
+    <Button fx:id="loadButton" alignment="CENTER" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="758.0" layoutY="496.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="42.0" prefWidth="74.0" scaleShape="false" snapToPixel="false" text="Load">
+      <font>
+         <Font name="Segoe UI Light" size="14.0" />
+      </font>
+   </Button>
     <opaqueInsets>
         <Insets />
     </opaqueInsets>
-</VBox>
+</AnchorPane>
