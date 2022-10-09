@@ -18,7 +18,7 @@ public class ProductViewController extends MainFormController {
 
     private static int currentPage = 0;
     private static int indexProductInList = 0;
-    private static final String pathToDnsImage = "C:\\Java Projects\\DNS\\src\\main\\java\\ru\\mai\\coursework\\dns\\images\\dns..jpg";
+    private static final String pathToDnsImage = "src\\main\\java\\ru\\mai\\coursework\\dns\\images\\dns..jpg";
 
     public static void loadButtonHandler(Button loadButton, List<Label> labels) {
         loadButton.setStyle("-fx-border-color: #ff0000; -fx-border-width: thick;");
@@ -46,10 +46,9 @@ public class ProductViewController extends MainFormController {
     }
 
     public static void importImages(List<ImageView> leftList) throws FileNotFoundException {
-        Image image = new Image(new FileInputStream("C:\\Java Projects\\DNS\\src\\main\\java\\ru\\mai\\coursework\\dns\\images\\dns..jpg"));
+        Image image = new Image(new FileInputStream(pathToDnsImage));
         for (ImageView img : leftList) {
             img.setImage(image);
-            img.setStyle("-fx-border-color: black");
         }
     }
 }
