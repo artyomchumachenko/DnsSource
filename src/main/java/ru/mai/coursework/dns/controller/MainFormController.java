@@ -2,9 +2,6 @@ package ru.mai.coursework.dns.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -23,36 +20,6 @@ public class MainFormController implements Initializable {
     List priceList = new LinkedList<>();
 
     @FXML
-    private Button pButton1;
-
-    @FXML
-    private Button pButton2;
-
-    @FXML
-    private Button pButton3;
-
-    @FXML
-    private Button pButton4;
-
-    @FXML
-    private Button pButton5;
-
-    @FXML
-    private ContextMenu pButtonCntxt1;
-
-    @FXML
-    private ContextMenu pButtonCntxt2;
-
-    @FXML
-    private ContextMenu pButtonCntxt3;
-
-    @FXML
-    private ContextMenu pButtonCntxt4;
-
-    @FXML
-    private ContextMenu pButtonCntxt5;
-
-    @FXML
     private ImageView pImage1;
 
     @FXML
@@ -68,40 +35,13 @@ public class MainFormController implements Initializable {
     private ImageView pImage5;
 
     @FXML
-    private Label pLabel;
-
-    @FXML
-    private Button priceButton1;
-
-    @FXML
-    private Button priceButton2;
-
-    @FXML
-    private Button priceButton3;
-
-    @FXML
-    private Button priceButton4;
-
-    @FXML
-    private Button priceButton5;
-
-    @FXML
     private VBox productsVBox;
-
-    @FXML
-    private Button regAccButton;
-
-    @FXML
-    private Label searchLabel;
 
     @FXML
     private TextField searchingField;
 
     @FXML
     private ImageView searchingImage;
-
-    @FXML
-    private Button signAccButton;
 
     @FXML
     private ImageView leftImage;
