@@ -7,7 +7,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
@@ -18,6 +17,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable {
+
+    List<Button> productButtonsList = new LinkedList<>();
+    List<ImageView> imageList = new LinkedList<>();
+    List<Button> priceList = new LinkedList<>();
 
     @FXML
     private Button pButton1;
@@ -106,6 +109,9 @@ public class MainFormController implements Initializable {
     @FXML
     private ImageView rightImage;
 
+    @FXML
+    private TextField numberOfPage;
+
     private void initAllImages() {
         try {
             ImageLoader.loaderDnsImage(pImage1);
@@ -121,15 +127,25 @@ public class MainFormController implements Initializable {
         }
     }
 
-    List<Button> buttons = new LinkedList<>();
-
     private void initFirstProducts() {
-        buttons.add(pButton1);
-        buttons.add(pButton2);
-        buttons.add(pButton3);
-        buttons.add(pButton4);
-        buttons.add(pButton5);
-        ProductViewController.initStartProducts(buttons);
+        productButtonsList.add(pButton1);
+        productButtonsList.add(pButton2);
+        productButtonsList.add(pButton3);
+        productButtonsList.add(pButton4);
+        productButtonsList.add(pButton5);
+
+        imageList.add(pImage1);
+        imageList.add(pImage2);
+        imageList.add(pImage3);
+        imageList.add(pImage4);
+        imageList.add(pImage5);
+
+        priceList.add(priceButton1);
+        priceList.add(priceButton2);
+        priceList.add(priceButton3);
+        priceList.add(priceButton4);
+        priceList.add(priceButton5);
+        ProductViewController.initStartProducts(productButtonsList);
     }
 
     private void imagesHandlers() {
@@ -139,11 +155,12 @@ public class MainFormController implements Initializable {
         leftImage.setOnMouseClicked(event -> {
             searchingField.setText("Я НАЖИМАЮ НА LEFT IMAGE");
         });
+    }
+
+    private void pagingProductHandlers() {
         rightImage.setOnMouseClicked(event -> {
-            searchingField.setText("Я НАЖИМАЮ НА RIGHT IMAGE");
-        });
-        rightImage.setOnMouseClicked(event -> {
-            ProductViewController.loadNextProducts(buttons);
+            ProductViewController.loadNextProducts(productButtonsList, imageList, priceList,
+                                                    rightImage);
         });
     }
 
@@ -151,6 +168,8 @@ public class MainFormController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initAllImages();
         initFirstProducts();
+        pagingProductHandlers();
+
         imagesHandlers();
     }
 }

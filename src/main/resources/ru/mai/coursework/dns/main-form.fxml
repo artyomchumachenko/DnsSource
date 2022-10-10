@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="872.0" snapToPixel="false" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.MainFormController">
+<AnchorPane prefHeight="614.0" prefWidth="881.0" snapToPixel="false" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.MainFormController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -108,7 +108,7 @@
          <children>
             <ImageView fx:id="leftImage" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="rightImage" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-            <TextField alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="30.0" text="1" />
+            <TextField fx:id="numberOfPage" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="30.0" text="1" />
          </children>
       </HBox>
    </children>
