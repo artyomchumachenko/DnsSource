@@ -18,9 +18,9 @@ import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable {
 
-    List<Button> productButtonsList = new LinkedList<>();
-    List<ImageView> imageList = new LinkedList<>();
-    List<Button> priceList = new LinkedList<>();
+    List productButtonsList = new LinkedList<>();
+    List imageList = new LinkedList<>();
+    List priceList = new LinkedList<>();
 
     @FXML
     private Button pButton1;
@@ -112,6 +112,12 @@ public class MainFormController implements Initializable {
     @FXML
     private TextField numberOfPage;
 
+    @FXML
+    private VBox imagesVBox;
+
+    @FXML
+    private VBox priceVBox;
+
     private void initAllImages() {
         try {
             ImageLoader.loaderDnsImage(pImage1);
@@ -128,23 +134,11 @@ public class MainFormController implements Initializable {
     }
 
     private void initFirstProducts() {
-        productButtonsList.add(pButton1);
-        productButtonsList.add(pButton2);
-        productButtonsList.add(pButton3);
-        productButtonsList.add(pButton4);
-        productButtonsList.add(pButton5);
-
-        imageList.add(pImage1);
-        imageList.add(pImage2);
-        imageList.add(pImage3);
-        imageList.add(pImage4);
-        imageList.add(pImage5);
-
-        priceList.add(priceButton1);
-        priceList.add(priceButton2);
-        priceList.add(priceButton3);
-        priceList.add(priceButton4);
-        priceList.add(priceButton5);
+        productButtonsList = productsVBox.getChildren().stream().toList();
+        leftImage.setDisable(true);
+        leftImage.setVisible(false);
+        imageList = imagesVBox.getChildren().stream().toList();
+        priceList = priceVBox.getChildren().stream().toList();
         ProductViewController.initStartProducts(productButtonsList);
     }
 
@@ -152,15 +146,28 @@ public class MainFormController implements Initializable {
         searchingImage.setOnMouseClicked(event -> {
             searchingField.setText("Я НАЖИМАЮ НА SEARCH IMAGE");
         });
-        leftImage.setOnMouseClicked(event -> {
-            searchingField.setText("Я НАЖИМАЮ НА LEFT IMAGE");
-        });
     }
 
     private void pagingProductHandlers() {
         rightImage.setOnMouseClicked(event -> {
-            ProductViewController.loadNextProducts(productButtonsList, imageList, priceList,
-                                                    rightImage);
+            ProductViewController.loadNextPageProducts(
+                    productButtonsList,
+                    imageList,
+                    priceList,
+                    rightImage,
+                    leftImage,
+                    numberOfPage
+            );
+        });
+        leftImage.setOnMouseClicked(event -> {
+            ProductViewController.loadPrevPageProducts(
+                    productButtonsList,
+                    imageList,
+                    priceList,
+                    rightImage,
+                    leftImage,
+                    numberOfPage
+            );
         });
     }
 

@@ -69,7 +69,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox alignment="CENTER" layoutX="243.0" layoutY="169.0" prefHeight="370.0" prefWidth="100.0" spacing="3.0">
+      <VBox fx:id="imagesVBox" alignment="CENTER" layoutX="243.0" layoutY="169.0" prefHeight="370.0" prefWidth="100.0" spacing="3.0">
          <children>
             <ImageView fx:id="pImage1" fitHeight="71.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="pImage2" fitHeight="71.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true" />
@@ -78,7 +78,7 @@
             <ImageView fx:id="pImage5" fitHeight="71.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </VBox>
-      <VBox layoutX="741.0" layoutY="169.0" prefHeight="370.0" prefWidth="100.0" spacing="3.0">
+      <VBox fx:id="priceVBox" layoutX="741.0" layoutY="169.0" prefHeight="370.0" prefWidth="100.0" spacing="3.0">
          <children>
             <Button fx:id="priceButton1" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
             <Button fx:id="priceButton2" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
