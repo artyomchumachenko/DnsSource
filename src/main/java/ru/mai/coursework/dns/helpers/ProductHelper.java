@@ -19,6 +19,10 @@ public class ProductHelper {
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
+    /**
+     * Select all product from table @products
+     * @return List
+     */
     public List<Product> getProductList() {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -32,6 +36,10 @@ public class ProductHelper {
         return productList;
     }
 
+    /**
+     * Select all products where equal in "name" from table @products
+     * @return List
+     */
     public List<Product> getProductListByName(String name) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
