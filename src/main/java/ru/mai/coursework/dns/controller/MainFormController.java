@@ -79,13 +79,7 @@ public class MainFormController implements Initializable {
         leftImage.setVisible(false);
         imageList = imagesVBox.getChildren().stream().toList();
         priceList = priceVBox.getChildren().stream().toList();
-        ProductViewController.initStartProducts(productButtonsList);
-    }
-
-    private void imagesHandlers() {
-        searchingImage.setOnMouseClicked(event -> {
-            searchingField.setText("Я НАЖИМАЮ НА SEARCH IMAGE");
-        });
+        ProductViewController.initStartProducts(productButtonsList, imageList, priceList, rightImage, leftImage, searchingField);
     }
 
     private void pagingProductHandlers() {
@@ -111,12 +105,24 @@ public class MainFormController implements Initializable {
         });
     }
 
+    private void searchingHandlers() {
+        searchingImage.setOnMouseClicked(event -> {
+            String name = searchingField.getText();
+            if (name.equals("")) {
+                searchingField.setPromptText("Вы ничего не ввели, повторите попытку!");
+            } else {
+                numberOfPage.setText(String.valueOf(1));
+                ProductViewController.printSearchingResults(productButtonsList, name,
+                        imageList, priceList, rightImage, leftImage, searchingField);
+            }
+        });
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initAllImages();
         initFirstProducts();
         pagingProductHandlers();
-
-        imagesHandlers();
+        searchingHandlers();
     }
 }

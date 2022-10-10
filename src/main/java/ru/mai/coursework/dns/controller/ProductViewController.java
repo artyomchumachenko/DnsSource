@@ -20,27 +20,69 @@ public class ProductViewController extends MainFormController {
     private static final int ONE = 1;
     private static final int TWO = 2;
 
-    public static List<Product> takeProductList() {
+    private static List<Product> productList = initProductList();
+
+    public static List<Product> initProductList() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Product> productList = new ProductHelper().getProductList();
+        return new ProductHelper().getProductList();
+    }
+
+    public static List<Product> initSearchProductList(String name) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        productList = new ProductHelper().getProductListByName(name);
         return productList;
     }
 
-    public static void initStartProducts(List<Button> productButtons) {
-        List<Product> productList = takeProductList();
+    public static void initStartProducts(List<Button> productButtons,
+                                         List<ImageView> imageButtons,
+                                         List<Button> priceButtons,
+                                         ImageView rightImage,
+                                         ImageView leftImage,
+                                         TextField searchField) {
+        if (productList.isEmpty()) {
+            searchField.setText("");
+            searchField.setPromptText("Такого товара нет :(");
+            rightImage.requestFocus();
+            productList = initProductList();
+        }
+
+        disableArrow(leftImage);
         currentProductButtonIndex = 0;
+        currentProductIndexToLoad = 0;
+        nextPageProductIndex = NUM_OF_BUTTON;
         lastIndexOfProducts = productList.size() - ONE;
         pageNumber = ONE;
 
-        if (lastIndexOfProducts >= NUM_OF_BUTTON) {
-            nextPageProductIndex = NUM_OF_BUTTON;
-        }
-        for (int i = currentProductIndexToLoad; i < nextPageProductIndex; i++) {
-            productButtons.get(currentProductButtonIndex).setText(productList.get(currentProductIndexToLoad).getProductName());
+        System.out.println(currentProductIndexToLoad);
+        System.out.println(nextPageProductIndex);
+        while (currentProductIndexToLoad < nextPageProductIndex) {
+            if (currentProductIndexToLoad > lastIndexOfProducts) {
+                while (currentProductButtonIndex < NUM_OF_BUTTON) {
+                    changeStateButtons(currentProductButtonIndex, productButtons, imageButtons, priceButtons, true);
+                    disableArrow(rightImage);
+                    disableArrow(leftImage);
+                    currentProductButtonIndex++;
+                }
+            } else {
+                System.out.println(productList.get(currentProductIndexToLoad).getProductName());
+                productButtons.get(currentProductButtonIndex).setText(productList.get(currentProductIndexToLoad).getProductName());
+                changeStateButtons(currentProductButtonIndex, productButtons, imageButtons, priceButtons, false);
+                enableArrow(rightImage);
+            }
             currentProductButtonIndex++;
             currentProductIndexToLoad++;
         }
         nextPageProductIndex += NUM_OF_BUTTON;
+    }
+
+    public static void printSearchingResults(List<Button> productButtons,
+                                             String name,
+                                             List<ImageView> imageList,
+                                             List<Button> priceList,
+                                             ImageView rightImage, ImageView leftImage,
+                                             TextField searchField) {
+        productList = initSearchProductList(name);
+        initStartProducts(productButtons, imageList, priceList, rightImage, leftImage, searchField);
     }
 
     public static void loadPrevPageProducts(List<Button> productButtons,
@@ -49,7 +91,6 @@ public class ProductViewController extends MainFormController {
                                             ImageView rightImage,
                                             ImageView leftImage,
                                             TextField page) {
-        List<Product> productList = takeProductList();
         currentProductButtonIndex = 0;
         currentProductIndexToLoad -= NUM_OF_BUTTON * TWO;
         nextPageProductIndex -= NUM_OF_BUTTON * TWO;
@@ -77,7 +118,6 @@ public class ProductViewController extends MainFormController {
                                             ImageView rightImage,
                                             ImageView leftImage,
                                             TextField page) {
-        List<Product> productList = takeProductList();
         currentProductButtonIndex = 0;
 
         while (currentProductIndexToLoad < nextPageProductIndex) {
