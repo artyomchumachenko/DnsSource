@@ -2,8 +2,10 @@ package ru.mai.coursework.dns.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
@@ -43,6 +45,15 @@ public class MainFormController implements Initializable {
     @FXML
     private VBox priceVBox;
 
+    @FXML
+    public void selectButton(MouseEvent event) {
+        Object eventSource = event.getSource();
+        if (eventSource instanceof Button) {
+            Button clickButton = (Button) eventSource;
+            ProductViewController.clickOnProductButton(clickButton);
+        }
+    }
+
     private void initAllImages() {
         try {
             for (Object img : imageList) {
@@ -62,7 +73,10 @@ public class MainFormController implements Initializable {
         priceList = priceVBox.getChildren().stream().toList();
         leftImage.setDisable(true);
         leftImage.setVisible(false);
-        ProductViewController.initStartProducts(productButtonsList, imageList, priceList, rightImage, leftImage, searchingField);
+        int startProductIndex = 0;
+        ProductViewController.initStartProducts(productButtonsList, imageList, priceList,
+                                                rightImage, leftImage, searchingField,
+                                                startProductIndex);
     }
 
     private void pagingProductHandlers() {

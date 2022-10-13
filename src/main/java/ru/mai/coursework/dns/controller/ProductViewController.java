@@ -5,12 +5,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import org.hibernate.Session;
 import ru.mai.coursework.dns.HibernateUtil;
+import ru.mai.coursework.dns.entity.Characteristics;
 import ru.mai.coursework.dns.entity.Product;
+import ru.mai.coursework.dns.helpers.ProductChHelper;
 import ru.mai.coursework.dns.helpers.ProductHelper;
 
+import java.util.LinkedList;
 import java.util.List;
 
-public class ProductViewController extends MainFormController {
+public class ProductViewController {
     /**
      * Next product index after product in pButton5
      */
@@ -31,6 +34,7 @@ public class ProductViewController extends MainFormController {
     /**
      * Amount of pButtons
      */
+    private static final String REGEX_BUTTON_ID = "[^\\d]";
     private static final int NUM_OF_BUTTON = 5;
     private static final int ONE = 1;
     private static final int TWO = 2;
@@ -66,7 +70,8 @@ public class ProductViewController extends MainFormController {
                                          List<ImageView> imageButtons,
                                          List<Button> priceButtons,
                                          ImageView rightImage, ImageView leftImage,
-                                         TextField searchField) {
+                                         TextField searchField,
+                                         int startProductIndex) {
         if (productList.isEmpty()) {
             searchField.setText("");
             productList = initProductList(); // If the list is empty we fill it with all products
@@ -74,7 +79,7 @@ public class ProductViewController extends MainFormController {
         enableArrow(rightImage);
         disableArrow(leftImage);
         currentProductButtonIndex = 0;
-        currentProductIndexToLoad = 0;
+        currentProductIndexToLoad = startProductIndex;
         nextPageProductIndex = NUM_OF_BUTTON;
         lastIndexOfProducts = productList.size() - ONE;
         pageNumber = ONE;
@@ -112,7 +117,8 @@ public class ProductViewController extends MainFormController {
                                              ImageView rightImage, ImageView leftImage,
                                              TextField searchField) {
         productList = initSearchProductList(name);
-        initStartProducts(productButtons, imageList, priceList, rightImage, leftImage, searchField);
+        int startProductIndex = 0;
+        initStartProducts(productButtons, imageList, priceList, rightImage, leftImage, searchField, startProductIndex);
     }
 
     /**
@@ -125,7 +131,7 @@ public class ProductViewController extends MainFormController {
                                             TextField page) {
         currentProductButtonIndex = 0;
         pageNumber--;
-        currentProductIndexToLoad = NUM_OF_BUTTON * pageNumber - NUM_OF_BUTTON;
+        currentProductIndexToLoad = NUM_OF_BUTTON * (pageNumber - ONE);
         nextPageProductIndex = NUM_OF_BUTTON * pageNumber;
 
         while (currentProductIndexToLoad < nextPageProductIndex) {
@@ -179,6 +185,24 @@ public class ProductViewController extends MainFormController {
     private static void disableArrow(ImageView arrow) {
         arrow.setDisable(true);
         arrow.setVisible(false);
+    }
+
+    public static List<Characteristics> initChsProduct() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        return new ProductChHelper().getCharacteristicList();
+    }
+
+    public static void clickOnProductButton(Button productButton) {
+        String buttonId = productButton.getId();
+        buttonId = buttonId.replaceAll(REGEX_BUTTON_ID, "");
+        System.out.println(productList
+                .get(currentProductIndexToLoad - NUM_OF_BUTTON + Integer.parseInt(buttonId) - ONE)
+                .getProductName());
+        List<Characteristics> chsList = new LinkedList<>();
+        chsList = initChsProduct();
+        for (Characteristics ch : chsList) {
+            System.out.println("Name ch: " + ch.getChName());
+        }
     }
 
     private static void changeStateButtons(int buttonIndex,
