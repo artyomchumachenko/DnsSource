@@ -19,7 +19,4 @@ public class Characteristics implements Serializable {
 
     @Column(name = "characteristic_name")
     private String chName;
-
-    @OneToOne
-    private ProductCh characteristic;
 }

@@ -11,11 +11,11 @@ import ru.mai.coursework.dns.entity.Characteristics;
 
 import java.util.List;
 
-public class ProductChHelper {
+public class CharacteristicHelper {
 
     private SessionFactory sessionFactory;
 
-    public ProductChHelper() {
+    public CharacteristicHelper() {
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 

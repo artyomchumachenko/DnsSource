@@ -22,7 +22,7 @@
    <children>
       <VBox fx:id="productsVBox" layoutX="343.0" layoutY="169.0" prefHeight="370.0" prefWidth="395.0" spacing="3.0">
          <children>
-            <Button fx:id="pButton1" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
+            <Button fx:id="pButton0" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
                <contextMenu>
                   <ContextMenu fx:id="pButtonCntxt1">
                     <items>
@@ -31,7 +31,7 @@
                   </ContextMenu>
                </contextMenu>
             </Button>
-            <Button fx:id="pButton2" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
+            <Button fx:id="pButton1" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
                <contextMenu>
                   <ContextMenu fx:id="pButtonCntxt2">
                     <items>
@@ -40,7 +40,7 @@
                   </ContextMenu>
                </contextMenu>
             </Button>
-            <Button fx:id="pButton3" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
+            <Button fx:id="pButton2" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
                <contextMenu>
                   <ContextMenu fx:id="pButtonCntxt3">
                     <items>
@@ -49,7 +49,7 @@
                   </ContextMenu>
                </contextMenu>
             </Button>
-            <Button fx:id="pButton4" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
+            <Button fx:id="pButton3" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
                <contextMenu>
                   <ContextMenu fx:id="pButtonCntxt4">
                     <items>
@@ -58,7 +58,7 @@
                   </ContextMenu>
                </contextMenu>
             </Button>
-            <Button fx:id="pButton5" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
+            <Button fx:id="pButton4" mnemonicParsing="false" onMouseClicked="#selectButton" prefHeight="74.0" prefWidth="399.0">
                <contextMenu>
                   <ContextMenu fx:id="pButtonCntxt5">
                     <items>

@@ -7,10 +7,9 @@ import org.hibernate.Session;
 import ru.mai.coursework.dns.HibernateUtil;
 import ru.mai.coursework.dns.entity.Characteristics;
 import ru.mai.coursework.dns.entity.Product;
-import ru.mai.coursework.dns.helpers.ProductChHelper;
+import ru.mai.coursework.dns.helpers.CharacteristicHelper;
 import ru.mai.coursework.dns.helpers.ProductHelper;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class ProductViewController {
@@ -189,19 +188,17 @@ public class ProductViewController {
 
     public static List<Characteristics> initProductChs() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        return new ProductChHelper().getCharacteristicList();
+        return new CharacteristicHelper().getCharacteristicList();
     }
 
     public static void clickOnProductButton(Button productButton) {
         String buttonId = productButton.getId();
         buttonId = buttonId.replaceAll(REGEX_BUTTON_ID, "");
-        System.out.println(productList
-                .get(currentProductIndexToLoad - NUM_OF_BUTTON + Integer.parseInt(buttonId) - ONE)
-                .getProductName());
-        List<Characteristics> chsList;
-        chsList = initProductChs();
-        for (Characteristics ch : chsList) {
-            System.out.println("Name ch: " + ch.getChName());
+        List<Characteristics> ch = productList
+                .get(Integer.parseInt(buttonId) + NUM_OF_BUTTON * (pageNumber - ONE))
+                .getCharacteristics();
+        for (Characteristics c : ch) {
+            System.out.println(c.getChName());
         }
     }
 
