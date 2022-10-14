@@ -187,7 +187,7 @@ public class ProductViewController {
         arrow.setVisible(false);
     }
 
-    public static List<Characteristics> initChsProduct() {
+    public static List<Characteristics> initProductChs() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         return new ProductChHelper().getCharacteristicList();
     }
@@ -198,8 +198,8 @@ public class ProductViewController {
         System.out.println(productList
                 .get(currentProductIndexToLoad - NUM_OF_BUTTON + Integer.parseInt(buttonId) - ONE)
                 .getProductName());
-        List<Characteristics> chsList = new LinkedList<>();
-        chsList = initChsProduct();
+        List<Characteristics> chsList;
+        chsList = initProductChs();
         for (Characteristics ch : chsList) {
             System.out.println("Name ch: " + ch.getChName());
         }

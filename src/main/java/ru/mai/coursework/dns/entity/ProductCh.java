@@ -18,11 +18,10 @@ public class ProductCh {
     private int productChId;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
     private Product product;
 
-//    @OneToMany(mappedBy = "characteristic")
-//    private List<Characteristics> characteristics;
+    @OneToOne(mappedBy = "characteristic")
+    private Characteristics currCh;
 
     @Column(name = "characteristic_value")
     private String chValue;

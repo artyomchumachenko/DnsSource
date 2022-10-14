@@ -20,6 +20,6 @@ public class Characteristics implements Serializable {
     @Column(name = "characteristic_name")
     private String chName;
 
-//    @ManyToOne
-//    private ProductCh characteristic;
+    @OneToOne
+    private ProductCh characteristic;
 }
