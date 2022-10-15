@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "characteristics")
@@ -19,4 +20,7 @@ public class Characteristics implements Serializable {
 
     @Column(name = "characteristic_name")
     private String chName;
+
+    @OneToMany(mappedBy = "characteristic")
+    List<ProductCh> productChs;
 }

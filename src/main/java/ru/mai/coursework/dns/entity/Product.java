@@ -21,10 +21,6 @@ public class Product implements Serializable {
     @Column(name = "product_name")
     private String productName;
 
-    @ManyToMany
-    @JoinTable(name = "product_characteristic",
-            joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "characteristic_id")}
-    )
-    private List<Characteristics> characteristics;
+    @OneToMany(mappedBy = "product")
+    List<ProductCh> productChs;
 }

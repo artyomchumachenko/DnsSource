@@ -3,8 +3,9 @@ package ru.mai.coursework.dns.controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import ru.mai.coursework.dns.entity.Characteristics;
 import ru.mai.coursework.dns.entity.Product;
+import ru.mai.coursework.dns.entity.ProductCh;
+import ru.mai.coursework.dns.helpers.ProductChHelper;
 import ru.mai.coursework.dns.helpers.ProductHelper;
 
 import java.util.List;
@@ -164,11 +165,12 @@ public class ProductViewController {
     public static void clickOnProductButton(Button productButton) {
         String buttonId = productButton.getId();
         buttonId = buttonId.replaceAll(REGEX_BUTTON_ID, "");
-        List<Characteristics> ch = productList
-                .get(Integer.parseInt(buttonId) + NUM_OF_BUTTON * (pageNumber - ONE))
-                .getCharacteristics();
-        for (Characteristics c : ch) {
-            System.out.println(c.getChName());
+        int clickProductId = Integer.parseInt(buttonId) + NUM_OF_BUTTON * (pageNumber - ONE);
+        List<ProductCh> prChList = new ProductChHelper().getProductChsByProductId(productList.get(clickProductId));
+        for (ProductCh abc : prChList) {
+            System.out.println(abc.getProduct().getProductName()
+                    + " " + abc.getCharacteristic().getChName()
+                    + " " + abc.getChValue());
         }
     }
 
