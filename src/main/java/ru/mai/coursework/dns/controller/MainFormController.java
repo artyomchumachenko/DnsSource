@@ -45,6 +45,9 @@ public class MainFormController implements Initializable {
     @FXML
     private VBox priceVBox;
 
+    /**
+     * Select buttons (need to write handlers for product buttons and other)
+     */
     @FXML
     public void selectButton(MouseEvent event) {
         Object eventSource = event.getSource();
@@ -74,7 +77,7 @@ public class MainFormController implements Initializable {
         leftImage.setDisable(true);
         leftImage.setVisible(false);
         int startProductIndex = 0;
-        ProductViewController.initStartProducts(productButtonsList, imageList, priceList,
+        ProductViewController.printProducts(productButtonsList, imageList, priceList,
                                                 rightImage, leftImage, searchingField,
                                                 startProductIndex);
     }

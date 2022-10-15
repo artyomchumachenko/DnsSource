@@ -3,11 +3,8 @@ package ru.mai.coursework.dns.controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import org.hibernate.Session;
-import ru.mai.coursework.dns.HibernateUtil;
 import ru.mai.coursework.dns.entity.Characteristics;
 import ru.mai.coursework.dns.entity.Product;
-import ru.mai.coursework.dns.helpers.CharacteristicHelper;
 import ru.mai.coursework.dns.helpers.ProductHelper;
 
 import java.util.List;
@@ -33,39 +30,17 @@ public class ProductViewController {
     /**
      * Amount of pButtons
      */
-    private static final String REGEX_BUTTON_ID = "[^\\d]";
+    private static final String REGEX_BUTTON_ID = "\\D";
     private static final int NUM_OF_BUTTON = 5;
     private static final int ONE = 1;
     private static final int TWO = 2;
 
-    private static List<Product> productList = initProductList();
-
-    /**
-     * Method which return all products from table @products
-     *
-     * @return List
-     */
-    public static List<Product> initProductList() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        return new ProductHelper().getProductList();
-    }
-
-    /**
-     * Method which return all products with equal "name" from table @products
-     *
-     * @param name String for searches corresponding product
-     * @return List
-     */
-    public static List<Product> initSearchProductList(String name) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        productList = new ProductHelper().getProductListByName(name);
-        return productList;
-    }
+    private static List<Product> productList = new ProductHelper().getProductList();
 
     /**
      * Method which initializes current pButtons, imgButtons, priceButtons
      */
-    public static void initStartProducts(List<Button> productButtons,
+    public static void printProducts(List<Button> productButtons,
                                          List<ImageView> imageButtons,
                                          List<Button> priceButtons,
                                          ImageView rightImage, ImageView leftImage,
@@ -73,7 +48,7 @@ public class ProductViewController {
                                          int startProductIndex) {
         if (productList.isEmpty()) {
             searchField.setText("");
-            productList = initProductList(); // If the list is empty we fill it with all products
+            productList = new ProductHelper().getProductList(); // If the list is empty we fill it with all products
         }
         enableArrow(rightImage);
         disableArrow(leftImage);
@@ -115,9 +90,9 @@ public class ProductViewController {
                                              List<Button> priceList,
                                              ImageView rightImage, ImageView leftImage,
                                              TextField searchField) {
-        productList = initSearchProductList(name);
+        productList = new ProductHelper().getProductListByName(name);
         int startProductIndex = 0;
-        initStartProducts(productButtons, imageList, priceList, rightImage, leftImage, searchField, startProductIndex);
+        printProducts(productButtons, imageList, priceList, rightImage, leftImage, searchField, startProductIndex);
     }
 
     /**
@@ -184,11 +159,6 @@ public class ProductViewController {
     private static void disableArrow(ImageView arrow) {
         arrow.setDisable(true);
         arrow.setVisible(false);
-    }
-
-    public static List<Characteristics> initProductChs() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        return new CharacteristicHelper().getCharacteristicList();
     }
 
     public static void clickOnProductButton(Button productButton) {
