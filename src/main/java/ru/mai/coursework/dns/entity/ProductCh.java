@@ -18,11 +18,11 @@ public class ProductCh {
     @Column(name = "characteristic_value")
     private String chValue;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "characteristic_id")
     Characteristics characteristic;
 }

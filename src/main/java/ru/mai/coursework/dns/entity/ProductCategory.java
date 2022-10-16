@@ -15,11 +15,11 @@ public class ProductCategory {
     @Column(name = "product_category_id")
     private int productCategoryId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     Categories category;
 }
