@@ -21,10 +21,9 @@ public class CharacteristicHelper {
 
     /**
      * Select characteristic list from table @characteristics
-     *
      * @return List
      */
-    public List<Characteristics> getCharacteristicList() {
+    public List<Characteristics> chListAll() {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Characteristics> cq = cb.createQuery(Characteristics.class);
@@ -32,8 +31,8 @@ public class CharacteristicHelper {
         cq.select(root);
         cq.orderBy(cb.asc(root.get("chName")));
         Query query = session.createQuery(cq);
-        List<Characteristics> chs = query.getResultList();
+        List<Characteristics> chList = query.getResultList();
         session.close();
-        return chs;
+        return chList;
     }
 }

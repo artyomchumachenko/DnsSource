@@ -23,7 +23,7 @@ public class ProductHelper {
      * Select all product from table @products
      * @return List
      */
-    public List<Product> getProductList() {
+    public List<Product> productListAll() {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -40,7 +40,7 @@ public class ProductHelper {
      * Select all products where equal in "name" from table @products
      * @return List
      */
-    public List<Product> getProductListByName(String name) {
+    public List<Product> productListByName(String name) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -48,8 +48,8 @@ public class ProductHelper {
         cq.select(root);
         cq.where(cb.like(root.get("productName"), "%" + name + "%"));
         Query query = session.createQuery(cq);
-        List<Product> productList = query.getResultList();
+        List<Product> productListByName = query.getResultList();
         session.close();
-        return productList;
+        return productListByName;
     }
 }

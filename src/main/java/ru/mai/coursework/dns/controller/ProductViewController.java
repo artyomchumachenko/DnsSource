@@ -3,11 +3,16 @@ package ru.mai.coursework.dns.controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import ru.mai.coursework.dns.entity.Categories;
 import ru.mai.coursework.dns.entity.Product;
+import ru.mai.coursework.dns.entity.ProductCategory;
 import ru.mai.coursework.dns.entity.ProductCh;
+import ru.mai.coursework.dns.helpers.CategoryHelper;
+import ru.mai.coursework.dns.helpers.ProductCategoryHelper;
 import ru.mai.coursework.dns.helpers.ProductChHelper;
 import ru.mai.coursework.dns.helpers.ProductHelper;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ProductViewController {
@@ -36,20 +41,20 @@ public class ProductViewController {
     private static final int ONE = 1;
     private static final int TWO = 2;
 
-    private static List<Product> productList = new ProductHelper().getProductList();
+    private static List<Product> productList = new ProductHelper().productListAll();
 
     /**
      * Method which initializes current pButtons, imgButtons, priceButtons
      */
     public static void printProducts(List<Button> productButtons,
-                                         List<ImageView> imageButtons,
-                                         List<Button> priceButtons,
-                                         ImageView rightImage, ImageView leftImage,
-                                         TextField searchField,
-                                         int startProductIndex) {
+                                     List<ImageView> imageButtons,
+                                     List<Button> priceButtons,
+                                     ImageView rightImage, ImageView leftImage,
+                                     TextField searchField,
+                                     int startProductIndex) {
         if (productList.isEmpty()) {
             searchField.setText("");
-            productList = new ProductHelper().getProductList(); // If the list is empty we fill it with all products
+            productList = new ProductHelper().productListAll(); // If the list is empty we fill it with all products
         }
         enableArrow(rightImage);
         disableArrow(leftImage);
@@ -91,7 +96,7 @@ public class ProductViewController {
                                              List<Button> priceList,
                                              ImageView rightImage, ImageView leftImage,
                                              TextField searchField) {
-        productList = new ProductHelper().getProductListByName(name);
+        productList = new ProductHelper().productListByName(name);
         int startProductIndex = 0;
         printProducts(productButtons, imageList, priceList, rightImage, leftImage, searchField, startProductIndex);
     }
@@ -166,11 +171,16 @@ public class ProductViewController {
         String buttonId = productButton.getId();
         buttonId = buttonId.replaceAll(REGEX_BUTTON_ID, "");
         int clickProductId = Integer.parseInt(buttonId) + NUM_OF_BUTTON * (pageNumber - ONE);
-        List<ProductCh> prChList = new ProductChHelper().getProductChsByProductId(productList.get(clickProductId));
-        for (ProductCh abc : prChList) {
-            System.out.println(abc.getProduct().getProductName()
-                    + " " + abc.getCharacteristic().getChName()
-                    + " " + abc.getChValue());
+        Product clickProduct = productList.get(clickProductId);
+
+        System.out.println("Product name: " + clickProduct.getProductName());
+        for (ProductCategory cat : clickProduct.getProductCategories()) {
+            System.out.println("Product category = " + cat.getCategory().getCategoryName());
+            System.out.println("Product upperCategoryId = " + cat.getCategory().getUpCategoryId());
+        }
+        for (ProductCh ch : clickProduct.getProductChs()) {
+            System.out.println("Product chName = " + ch.getCharacteristic().getChName());
+            System.out.println("Product chValue = " + ch.getChValue());
         }
     }
 

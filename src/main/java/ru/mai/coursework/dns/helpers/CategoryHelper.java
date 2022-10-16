@@ -7,30 +7,32 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
-import ru.mai.coursework.dns.entity.Product;
-import ru.mai.coursework.dns.entity.ProductCh;
+import ru.mai.coursework.dns.entity.Categories;
 
 import java.util.List;
 
-public class ProductChHelper {
+public class CategoryHelper {
 
     private SessionFactory sessionFactory;
 
-    public ProductChHelper() {
+    public CategoryHelper() {
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
-    public List<ProductCh> chListByProduct(Product product) {
+    /**
+     * Select categories list from table @categories
+     * @return List
+     */
+    public List<Categories> categoryListAll() {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<ProductCh> cq = cb.createQuery(ProductCh.class);
-        Root<ProductCh> root = cq.from(ProductCh.class);
-        cq.where(cb.equal(root.get("product"), product));
-        cq.orderBy(cb.asc(root.get("characteristic")));
+        CriteriaQuery<Categories> cq = cb.createQuery(Categories.class);
+        Root<Categories> root = cq.from(Categories.class);
         cq.select(root);
+        cq.orderBy(cb.asc(root.get("categoryId")));
         Query query = session.createQuery(cq);
-        List<ProductCh> chListByProduct = query.getResultList();
+        List<Categories> categoriesList = query.getResultList();
         session.close();
-        return chListByProduct;
+        return categoriesList;
     }
 }
