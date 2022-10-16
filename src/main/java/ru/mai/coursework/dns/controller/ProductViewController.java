@@ -3,16 +3,11 @@ package ru.mai.coursework.dns.controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import ru.mai.coursework.dns.entity.Categories;
 import ru.mai.coursework.dns.entity.Product;
 import ru.mai.coursework.dns.entity.ProductCategory;
 import ru.mai.coursework.dns.entity.ProductCh;
-import ru.mai.coursework.dns.helpers.CategoryHelper;
-import ru.mai.coursework.dns.helpers.ProductCategoryHelper;
-import ru.mai.coursework.dns.helpers.ProductChHelper;
 import ru.mai.coursework.dns.helpers.ProductHelper;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class ProductViewController {

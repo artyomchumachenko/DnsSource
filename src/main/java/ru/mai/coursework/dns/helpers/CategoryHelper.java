@@ -23,13 +23,14 @@ public class CategoryHelper {
      * Select categories list from table @categories
      * @return List
      */
-    public List<Categories> categoryListAll() {
+    public List<Categories> categoryStartListAll() {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Categories> cq = cb.createQuery(Categories.class);
         Root<Categories> root = cq.from(Categories.class);
         cq.select(root);
         cq.orderBy(cb.asc(root.get("categoryId")));
+        cq.where(cb.equal(root.get("upCategoryId"), 0));
         Query query = session.createQuery(cq);
         List<Categories> categoriesList = query.getResultList();
         session.close();

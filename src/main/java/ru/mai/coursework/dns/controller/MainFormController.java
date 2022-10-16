@@ -1,12 +1,17 @@
 package ru.mai.coursework.dns.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import ru.mai.coursework.dns.entity.Categories;
+import ru.mai.coursework.dns.helpers.CategoryHelper;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
 import java.io.FileNotFoundException;
@@ -45,6 +50,12 @@ public class MainFormController implements Initializable {
     @FXML
     private VBox priceVBox;
 
+    @FXML
+    private ComboBox<String> categoryComboBox;
+
+    @FXML
+    private VBox filterVBox;
+
     /**
      * Select buttons (need to write handlers for product buttons and other)
      */
@@ -80,6 +91,16 @@ public class MainFormController implements Initializable {
         ProductViewController.printProducts(productButtonsList, imageList, priceList,
                                                 rightImage, leftImage, searchingField,
                                                 startProductIndex);
+    }
+
+    private void initStartCategories() {
+        List<String> categoriesNameList = new LinkedList<>();
+        List<Categories> categoriesList = new CategoryHelper().categoryStartListAll();
+        for (Categories cat : categoriesList) {
+            categoriesNameList.add(cat.getCategoryName());
+        }
+        ObservableList<String> categoriesName = FXCollections.observableList(categoriesNameList);
+        categoryComboBox.setItems(categoriesName);
     }
 
     private void pagingProductHandlers() {
@@ -121,5 +142,6 @@ public class MainFormController implements Initializable {
         initFirstProducts();
         pagingProductHandlers();
         searchingHandlers();
+        initStartCategories();
     }
 }
