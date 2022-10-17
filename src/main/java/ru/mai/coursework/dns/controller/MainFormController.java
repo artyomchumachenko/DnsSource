@@ -19,7 +19,6 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.IntStream;
 
 public class MainFormController implements Initializable {
 
@@ -94,7 +93,7 @@ public class MainFormController implements Initializable {
                     name,
                     priceList,
                     rightImage, leftImage,
-                    searchingField, numberOfPage);
+                    numberOfPage);
         });
     }
 
@@ -117,7 +116,7 @@ public class MainFormController implements Initializable {
         leftImage.setVisible(false);
         int startProductIndex = 0;
         ProductViewController.printProducts(productButtonsList, priceList,
-                rightImage, leftImage, searchingField,
+                rightImage, leftImage,
                 startProductIndex, numberOfPage);
     }
 
@@ -151,7 +150,6 @@ public class MainFormController implements Initializable {
                 priceList,
                 rightImage,
                 leftImage,
-                searchingField,
                 numberOfPage
         );
     }

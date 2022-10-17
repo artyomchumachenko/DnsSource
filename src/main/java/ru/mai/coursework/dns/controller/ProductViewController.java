@@ -24,10 +24,6 @@ public class ProductViewController {
      * Current pButton which will be filling with product
      */
     private static int currentProductButtonIndex;
-    /**
-     * Product index which lie last in productList
-     */
-    private static int lastIndexOfProducts;
     private static int pageNumber;
     /**
      * Amount of pButtons
@@ -37,7 +33,7 @@ public class ProductViewController {
     private static final int ONE = 1;
     private static final int TWO = 2;
 
-    private static List<Product> productList = new ProductHelper().productListAll();
+    private static List<Product> productList = new ProductHelper().productListAll(NUM_OF_BUTTON * ONE);
 
     /**
      * Method which initializes current pButtons, imgButtons, priceButtons
@@ -45,19 +41,18 @@ public class ProductViewController {
     public static void printProducts(List<Button> productButtons,
                                      List<Button> priceButtons,
                                      ImageView rightImage, ImageView leftImage,
-                                     TextField searchField,
                                      int startProductIndex,
                                      TextField page) {
+        pageNumber = ONE;
         if (productList.isEmpty()) {
-            productList = new ProductHelper().productListAll(); // If the list is empty we fill it with all products
+            productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber); // If the list is empty we fill it with all products
         }
         enableArrow(rightImage);
         disableArrow(leftImage);
         currentProductButtonIndex = 0;
         currentProductIndexToLoad = startProductIndex;
         nextPageProductIndex = NUM_OF_BUTTON;
-        lastIndexOfProducts = productList.size() - ONE;
-        pageNumber = ONE;
+        int lastIndexOfProducts = productList.size() - ONE;
         page.setText(String.valueOf(pageNumber));
 
         while (currentProductIndexToLoad < nextPageProductIndex) {
@@ -94,19 +89,19 @@ public class ProductViewController {
                                              String name,
                                              List<Button> priceList,
                                              ImageView rightImage, ImageView leftImage,
-                                             TextField searchField, TextField page) {
+                                             TextField page) {
         productList = new ProductHelper().productListByName(name);
         int startProductIndex = 0;
-        printProducts(productButtons, priceList, rightImage, leftImage, searchField, startProductIndex, page);
+        printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
     }
 
     public static void printCategoryFilterResults(List<Button> productButtons,
-                                             List<Button> priceList,
-                                             ImageView rightImage, ImageView leftImage,
-                                             TextField searchField, TextField page) {
+                                                  List<Button> priceList,
+                                                  ImageView rightImage, ImageView leftImage,
+                                                  TextField page) {
         productList = FilterFieldController.filterProductsListResult();
         int startProductIndex = 0;
-        printProducts(productButtons, priceList, rightImage, leftImage, searchField, startProductIndex, page);
+        printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
     }
 
     /**
@@ -142,6 +137,9 @@ public class ProductViewController {
                                             ImageView rightImage, ImageView leftImage,
                                             TextField page) {
         currentProductButtonIndex = 0;
+        pageNumber++;
+        productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber);
+        int lastIndexOfProducts = productList.size() - ONE;
 
         while (currentProductIndexToLoad < nextPageProductIndex) {
             if (currentProductIndexToLoad > lastIndexOfProducts) {
@@ -158,7 +156,6 @@ public class ProductViewController {
             }
         }
         nextPageProductIndex += NUM_OF_BUTTON;
-        pageNumber++;
         page.setText(String.valueOf(pageNumber));
         enableArrow(leftImage);
     }

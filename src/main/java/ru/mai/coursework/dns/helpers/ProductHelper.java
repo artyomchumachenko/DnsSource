@@ -21,9 +21,10 @@ public class ProductHelper {
 
     /**
      * Select all product from table @products
+     *
      * @return List
      */
-    public List<Product> productListAll() {
+    public List<Product> productListAll(int amount) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -31,13 +32,14 @@ public class ProductHelper {
         cq.select(root);
         cq.orderBy(cb.desc(root.get("productId")));
         Query query = session.createQuery(cq);
-        List<Product> productList = query.getResultList();
+        List<Product> productList = query.setMaxResults(amount).getResultList();
         session.close();
         return productList;
     }
 
     /**
      * Select all products where equal in "name" from table @products
+     *
      * @return List
      */
     public List<Product> productListByName(String name) {

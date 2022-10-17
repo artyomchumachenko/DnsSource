@@ -14,6 +14,7 @@ import java.util.List;
 
 public class FilterFieldController {
     private static int currentCategoryId;
+
     public static void reloadCategoryBox(ComboBox<String> categoryComboBox) {
         clickOnCategory(categoryComboBox);
     }
@@ -24,7 +25,6 @@ public class FilterFieldController {
         List<String> newCategoryList = new CategoryHelper().categoryNameListById(currentCategoryId);
         ObservableList<String> obsList = FXCollections.observableList(newCategoryList);
         categoryComboBox.setItems(obsList);
-//        categoryComboBox.setValue(obsList.get(0));
     }
 
     public static List<Product> filterProductsListResult() {
