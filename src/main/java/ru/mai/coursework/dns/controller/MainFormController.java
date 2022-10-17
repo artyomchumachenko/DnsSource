@@ -123,9 +123,13 @@ public class MainFormController implements Initializable {
         leftImage.setDisable(true);
         leftImage.setVisible(false);
         int startProductIndex = 0;
-        ProductViewController.printProducts(productButtonsList, priceList,
+        ProductViewController.printProducts(
+                productButtonsList,
+                priceList,
                 rightImage, leftImage,
-                startProductIndex, numberOfPage);
+                startProductIndex,
+                numberOfPage
+        );
 
         choiceBox.setDisable(true);
         choiceBox.setVisible(false);
@@ -161,8 +165,7 @@ public class MainFormController implements Initializable {
         ProductViewController.printCategoryFilterResults(
                 productButtonsList,
                 priceList,
-                rightImage,
-                leftImage,
+                rightImage, leftImage,
                 numberOfPage
         );
     }

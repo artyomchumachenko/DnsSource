@@ -96,7 +96,7 @@ public class ProductViewController {
         printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
     }
 
-    private static boolean fail = true;
+    private static boolean isSelectedCategoryFound = true;
     public static void printCategoryFilterResults(List<Button> productButtons,
                                                   List<Button> priceList,
                                                   ImageView rightImage, ImageView leftImage,
@@ -104,7 +104,7 @@ public class ProductViewController {
         List<Product> bufferProductList = productList;
         productList = FilterFieldController.filterProductsListResult(NUM_OF_BUTTON * pageNumber);
         if (productList.isEmpty()) {
-            fail = false;
+            isSelectedCategoryFound = false;
             productList = bufferProductList;
             System.out.println("pl is empty");
         }
@@ -147,7 +147,7 @@ public class ProductViewController {
                                             ComboBox<String> cmbBox) {
         currentProductButtonIndex = 0;
         pageNumber++;
-        if (cmbBox.getValue() != null && !cmbBox.getValue().equals("Все товары") && fail) {
+        if (cmbBox.getValue() != null && !cmbBox.getValue().equals("Все товары") && isSelectedCategoryFound) {
             productList = FilterFieldController.filterProductsListResult(NUM_OF_BUTTON * pageNumber);
         } else {
             productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber);

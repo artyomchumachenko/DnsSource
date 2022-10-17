@@ -29,8 +29,10 @@ public class FilterFieldController {
 
     public static List<Product> filterProductsListResult(int amount) {
         Categories currentCategory = new CategoryHelper().categoryById(currentCategoryId);
-        List<ProductCategory> productListByCategory = new ProductHelper().productListByCategory(currentCategory,
-                                                                                                amount);
+        List<ProductCategory> productListByCategory = new ProductHelper().productListByCategory(
+                currentCategory,
+                amount
+        );
         List<Product> productList = new LinkedList<>();
         for (ProductCategory product : productListByCategory) {
             productList.add(product.getProduct());
