@@ -1,17 +1,12 @@
 package ru.mai.coursework.dns.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import ru.mai.coursework.dns.entity.Categories;
-import ru.mai.coursework.dns.helpers.CategoryHelper;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
 import java.io.FileNotFoundException;
@@ -23,7 +18,6 @@ import java.util.ResourceBundle;
 public class MainFormController implements Initializable {
 
     List productButtonsList = new LinkedList<>();
-    List imageList = new LinkedList<>();
     List priceList = new LinkedList<>();
 
     @FXML
@@ -45,22 +39,14 @@ public class MainFormController implements Initializable {
     private TextField numberOfPage;
 
     @FXML
-    private VBox imagesVBox;
-
-    @FXML
     private VBox priceVBox;
-
-    @FXML
-    private ComboBox<String> categoryComboBox;
-
-    @FXML
-    private VBox filterVBox;
 
     /**
      * Select buttons (need to write handlers for product buttons and other)
      */
     @FXML
     public void selectButton(MouseEvent event) {
+        System.out.println("Select button successfully");
         Object eventSource = event.getSource();
         if (eventSource instanceof Button) {
             Button clickButton = (Button) eventSource;
@@ -70,9 +56,7 @@ public class MainFormController implements Initializable {
 
     private void initAllImages() {
         try {
-            for (Object img : imageList) {
-                ImageLoader.loaderDnsImage((ImageView) img);
-            }
+            System.out.println("Init all images successfully");
             ImageLoader.loaderSearchingImage(searchingImage);
             ImageLoader.loaderLeftImage(leftImage);
             ImageLoader.loaderRightImage(rightImage);
@@ -82,31 +66,21 @@ public class MainFormController implements Initializable {
     }
 
     private void initFirstProducts() {
+        System.out.println("Init all products successfully");
         productButtonsList = productsVBox.getChildren().stream().toList();
-        imageList = imagesVBox.getChildren().stream().toList();
         priceList = priceVBox.getChildren().stream().toList();
         leftImage.setDisable(true);
         leftImage.setVisible(false);
         int startProductIndex = 0;
-        ProductViewController.printProducts(productButtonsList, imageList, priceList,
-                                                rightImage, leftImage, searchingField,
-                                                startProductIndex);
-    }
-
-    private void initStartCategories() {
-        List<String> categoriesNameList = new LinkedList<>();
-        List<Categories> categoriesList = new CategoryHelper().categoryStartListAll();
-        for (Categories cat : categoriesList) {
-            categoriesNameList.add(cat.getCategoryName());
-        }
-        ObservableList<String> categoriesName = FXCollections.observableList(categoriesNameList);
-        categoryComboBox.setItems(categoriesName);
+        ProductViewController.printProducts(productButtonsList, priceList,
+                rightImage, leftImage, searchingField,
+                startProductIndex);
     }
 
     private void pagingProductHandlers() {
+        System.out.println("Paging operation successfully");
         rightImage.setOnMouseClicked(event -> ProductViewController.loadNextPageProducts(
                 productButtonsList,
-                imageList,
                 priceList,
                 rightImage,
                 leftImage,
@@ -114,7 +88,6 @@ public class MainFormController implements Initializable {
         ));
         leftImage.setOnMouseClicked(event -> ProductViewController.loadPrevPageProducts(
                 productButtonsList,
-                imageList,
                 priceList,
                 rightImage,
                 leftImage,
@@ -123,13 +96,13 @@ public class MainFormController implements Initializable {
     }
 
     private void searchingHandlers() {
+        System.out.println("Searching operation successfully");
         searchingImage.setOnMouseClicked(event -> {
             String name = searchingField.getText();
             numberOfPage.setText(String.valueOf(1));
             ProductViewController.printSearchingResults(
                     productButtonsList,
                     name,
-                    imageList,
                     priceList,
                     rightImage, leftImage,
                     searchingField);
@@ -142,6 +115,5 @@ public class MainFormController implements Initializable {
         initFirstProducts();
         pagingProductHandlers();
         searchingHandlers();
-        initStartCategories();
     }
 }

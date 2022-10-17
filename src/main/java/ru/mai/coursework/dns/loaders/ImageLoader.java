@@ -9,15 +9,9 @@ import java.io.FileNotFoundException;
 
 public class ImageLoader extends MainFormController {
 
-    private static final String pathToDnsImage = "src/main/resources/ru/mai/coursework/dns/images/dns..jpg";
     private static final String pathToSearchingImage = "src/main/resources/ru/mai/coursework/dns/images/searching.png";
     private static final String pathToLeftImage = "src/main/resources/ru/mai/coursework/dns/images/left.png";
     private static final String pathToRightImage = "src/main/resources/ru/mai/coursework/dns/images/right.png";
-
-    public static void loaderDnsImage(ImageView imageView) throws FileNotFoundException {
-        Image dnsImage = new Image(new FileInputStream(pathToDnsImage));
-        imageView.setImage(dnsImage);
-    }
 
     public static void loaderSearchingImage(ImageView imageView) throws FileNotFoundException {
         Image searchingImage = new Image(new FileInputStream(pathToSearchingImage));

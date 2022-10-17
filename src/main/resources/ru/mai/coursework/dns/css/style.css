@@ -1,3 +1,6 @@
 #regAccButton, #signAccButton {
     -fx-background-color: #54a4ff;
 }
+#filterVBox {
+    -fx-background-color: #e0e0e0;
+}

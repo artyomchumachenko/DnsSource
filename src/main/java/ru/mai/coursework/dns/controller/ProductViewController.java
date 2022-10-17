@@ -42,7 +42,6 @@ public class ProductViewController {
      * Method which initializes current pButtons, imgButtons, priceButtons
      */
     public static void printProducts(List<Button> productButtons,
-                                     List<ImageView> imageButtons,
                                      List<Button> priceButtons,
                                      ImageView rightImage, ImageView leftImage,
                                      TextField searchField,
@@ -63,7 +62,7 @@ public class ProductViewController {
             if (currentProductIndexToLoad > lastIndexOfProducts) {
                 while (currentProductButtonIndex < NUM_OF_BUTTON) {
                     // Disable not used buttons
-                    changeStateButtons(currentProductButtonIndex, productButtons, imageButtons, priceButtons, true);
+                    changeStateButtons(currentProductButtonIndex, productButtons, priceButtons, true);
                     // If we received that on initialize first product page
                     // currentProductIndexToLoad > lastIndexOfProducts
                     // arrow can't flip pages
@@ -73,7 +72,7 @@ public class ProductViewController {
                 }
                 break;
             } else {
-                changeStateButtons(currentProductButtonIndex, productButtons, imageButtons, priceButtons, false);
+                changeStateButtons(currentProductButtonIndex, productButtons, priceButtons, false);
                 productButtons.get(currentProductButtonIndex).setText(productList.get(currentProductIndexToLoad).getProductName());
                 currentProductButtonIndex++;
                 currentProductIndexToLoad++;
@@ -87,20 +86,18 @@ public class ProductViewController {
      */
     public static void printSearchingResults(List<Button> productButtons,
                                              String name,
-                                             List<ImageView> imageList,
                                              List<Button> priceList,
                                              ImageView rightImage, ImageView leftImage,
                                              TextField searchField) {
         productList = new ProductHelper().productListByName(name);
         int startProductIndex = 0;
-        printProducts(productButtons, imageList, priceList, rightImage, leftImage, searchField, startProductIndex);
+        printProducts(productButtons, priceList, rightImage, leftImage, searchField, startProductIndex);
     }
 
     /**
      * Print prev product page
      */
     public static void loadPrevPageProducts(List<Button> productButtons,
-                                            List<ImageView> imageButtons,
                                             List<Button> priceButtons,
                                             ImageView rightImage, ImageView leftImage,
                                             TextField page) {
@@ -110,7 +107,7 @@ public class ProductViewController {
         nextPageProductIndex = NUM_OF_BUTTON * pageNumber;
 
         while (currentProductIndexToLoad < nextPageProductIndex) {
-            changeStateButtons(currentProductButtonIndex, productButtons, imageButtons, priceButtons, false);
+            changeStateButtons(currentProductButtonIndex, productButtons, priceButtons, false);
             productButtons.get(currentProductButtonIndex).setText(productList.get(currentProductIndexToLoad).getProductName());
             currentProductButtonIndex++;
             currentProductIndexToLoad++;
@@ -126,7 +123,6 @@ public class ProductViewController {
     }
 
     public static void loadNextPageProducts(List<Button> productButtons,
-                                            List<ImageView> imageButtons,
                                             List<Button> priceButtons,
                                             ImageView rightImage, ImageView leftImage,
                                             TextField page) {
@@ -135,7 +131,7 @@ public class ProductViewController {
         while (currentProductIndexToLoad < nextPageProductIndex) {
             if (currentProductIndexToLoad > lastIndexOfProducts) {
                 while (currentProductButtonIndex < NUM_OF_BUTTON) {
-                    changeStateButtons(currentProductButtonIndex, productButtons, imageButtons, priceButtons, true);
+                    changeStateButtons(currentProductButtonIndex, productButtons, priceButtons, true);
                     disableArrow(rightImage);
                     currentProductButtonIndex++;
                 }
@@ -181,13 +177,10 @@ public class ProductViewController {
 
     private static void changeStateButtons(int buttonIndex,
                                            List<Button> button,
-                                           List<ImageView> image,
                                            List<Button> price,
                                            boolean disable) {
         button.get(buttonIndex).setDisable(disable);
         button.get(buttonIndex).setVisible(!disable);
-        image.get(buttonIndex).setDisable(disable);
-        image.get(buttonIndex).setVisible(!disable);
         price.get(buttonIndex).setDisable(disable);
         price.get(buttonIndex).setVisible(!disable);
     }
