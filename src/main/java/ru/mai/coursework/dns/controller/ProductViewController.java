@@ -1,6 +1,7 @@
 package ru.mai.coursework.dns.controller;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import ru.mai.coursework.dns.entity.Product;
@@ -95,11 +96,18 @@ public class ProductViewController {
         printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
     }
 
+    private static boolean fail = true;
     public static void printCategoryFilterResults(List<Button> productButtons,
                                                   List<Button> priceList,
                                                   ImageView rightImage, ImageView leftImage,
                                                   TextField page) {
-        productList = FilterFieldController.filterProductsListResult();
+        List<Product> bufferProductList = productList;
+        productList = FilterFieldController.filterProductsListResult(NUM_OF_BUTTON * pageNumber);
+        if (productList.isEmpty()) {
+            fail = false;
+            productList = bufferProductList;
+            System.out.println("pl is empty");
+        }
         int startProductIndex = 0;
         printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
     }
@@ -135,10 +143,15 @@ public class ProductViewController {
     public static void loadNextPageProducts(List<Button> productButtons,
                                             List<Button> priceButtons,
                                             ImageView rightImage, ImageView leftImage,
-                                            TextField page) {
+                                            TextField page,
+                                            ComboBox<String> cmbBox) {
         currentProductButtonIndex = 0;
         pageNumber++;
-        productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber);
+        if (cmbBox.getValue() != null && !cmbBox.getValue().equals("Все товары") && fail) {
+            productList = FilterFieldController.filterProductsListResult(NUM_OF_BUTTON * pageNumber);
+        } else {
+            productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber);
+        }
         int lastIndexOfProducts = productList.size() - ONE;
 
         while (currentProductIndexToLoad < nextPageProductIndex) {

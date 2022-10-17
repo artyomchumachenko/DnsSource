@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -55,6 +56,12 @@ public class MainFormController implements Initializable {
     @FXML
     private Button cancelFilters;
 
+    @FXML
+    private ComboBox<String> chComboBox;
+
+    @FXML
+    private ChoiceBox<String> choiceBox;
+
     private void initAllImages() {
         try {
             System.out.println("Init all images successfully");
@@ -73,7 +80,8 @@ public class MainFormController implements Initializable {
                 priceList,
                 rightImage,
                 leftImage,
-                numberOfPage
+                numberOfPage,
+                categoryComboBox
         ));
         leftImage.setOnMouseClicked(event -> ProductViewController.loadPrevPageProducts(
                 productButtonsList,
@@ -118,6 +126,11 @@ public class MainFormController implements Initializable {
         ProductViewController.printProducts(productButtonsList, priceList,
                 rightImage, leftImage,
                 startProductIndex, numberOfPage);
+
+        choiceBox.setDisable(true);
+        choiceBox.setVisible(false);
+        chComboBox.setDisable(true);
+        chComboBox.setVisible(false);
     }
 
     private void startCategoriesFilterField() {

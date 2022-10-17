@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
 import ru.mai.coursework.dns.entity.Characteristics;
+import ru.mai.coursework.dns.entity.Product;
+import ru.mai.coursework.dns.entity.ProductCh;
 
 import java.util.List;
 
@@ -34,5 +36,19 @@ public class CharacteristicHelper {
         List<Characteristics> chList = query.getResultList();
         session.close();
         return chList;
+    }
+
+    public List<ProductCh> chListByProduct(Product product) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<ProductCh> cq = cb.createQuery(ProductCh.class);
+        Root<ProductCh> root = cq.from(ProductCh.class);
+        cq.where(cb.equal(root.get("product"), product));
+        cq.orderBy(cb.asc(root.get("characteristic")));
+        cq.select(root);
+        Query query = session.createQuery(cq);
+        List<ProductCh> chListByProduct = query.getResultList();
+        session.close();
+        return chListByProduct;
     }
 }

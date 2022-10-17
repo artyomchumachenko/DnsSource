@@ -35,7 +35,7 @@ public class CategoryHelper {
         Query query = session.createQuery(cq);
         List<Categories> categoriesList = query.getResultList();
         List<String> categoriesNameList = new LinkedList<>();
-        String upCat = "";
+        String upCat;
         if (upCategoryId != 0) {
             upCat = upCategoryNameByUpId(upCategoryId);
             categoriesNameList.add(upCat);
@@ -77,7 +77,6 @@ public class CategoryHelper {
 
     public Categories categoryById(int categoryId) {
         Session session = sessionFactory.openSession();
-        Categories cat = session.load(Categories.class, categoryId);
-        return cat;
+        return session.getReference(Categories.class, categoryId);
     }
 }

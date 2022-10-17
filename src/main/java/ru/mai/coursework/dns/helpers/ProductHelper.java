@@ -7,7 +7,9 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
+import ru.mai.coursework.dns.entity.Categories;
 import ru.mai.coursework.dns.entity.Product;
+import ru.mai.coursework.dns.entity.ProductCategory;
 
 import java.util.List;
 
@@ -53,5 +55,19 @@ public class ProductHelper {
         List<Product> productListByName = query.getResultList();
         session.close();
         return productListByName;
+    }
+
+    public List<ProductCategory> productListByCategory(Categories category, int amount) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<ProductCategory> cq = cb.createQuery(ProductCategory.class);
+        Root<ProductCategory> root = cq.from(ProductCategory.class);
+        cq.select(root);
+        cq.where(cb.equal(root.get("category"), category));
+        Query query = session.createQuery(cq);
+        // Можно ли сразу получить Product, а не ProductCategory?
+        List<ProductCategory> productListByCategory = query.setMaxResults(amount).getResultList();
+        session.close();
+        return productListByCategory;
     }
 }

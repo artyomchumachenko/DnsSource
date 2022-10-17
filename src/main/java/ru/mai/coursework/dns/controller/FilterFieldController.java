@@ -7,7 +7,7 @@ import ru.mai.coursework.dns.entity.Categories;
 import ru.mai.coursework.dns.entity.Product;
 import ru.mai.coursework.dns.entity.ProductCategory;
 import ru.mai.coursework.dns.helpers.CategoryHelper;
-import ru.mai.coursework.dns.helpers.ProductCategoryHelper;
+import ru.mai.coursework.dns.helpers.ProductHelper;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,9 +27,10 @@ public class FilterFieldController {
         categoryComboBox.setItems(obsList);
     }
 
-    public static List<Product> filterProductsListResult() {
+    public static List<Product> filterProductsListResult(int amount) {
         Categories currentCategory = new CategoryHelper().categoryById(currentCategoryId);
-        List<ProductCategory> productListByCategory = new ProductCategoryHelper().productListByCategory(currentCategory);
+        List<ProductCategory> productListByCategory = new ProductHelper().productListByCategory(currentCategory,
+                                                                                                amount);
         List<Product> productList = new LinkedList<>();
         for (ProductCategory product : productListByCategory) {
             productList.add(product.getProduct());
