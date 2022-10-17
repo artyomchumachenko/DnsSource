@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
+import ru.mai.coursework.dns.entity.Categories;
 import ru.mai.coursework.dns.entity.Product;
 import ru.mai.coursework.dns.entity.ProductCategory;
 
@@ -20,21 +21,17 @@ public class ProductCategoryHelper {
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
-    /**
-     * Select all product from table @products
-     * @return List
-     */
-    public List<ProductCategory> categoriesListByProduct(Product product) {
+    public List<ProductCategory> productListByCategory(Categories category) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<ProductCategory> cq = cb.createQuery(ProductCategory.class);
         Root<ProductCategory> root = cq.from(ProductCategory.class);
         cq.select(root);
-        cq.where(cb.equal(root.get("product"), product));
-        cq.orderBy(cb.asc(root.get("productCategoryId")));
+        cq.where(cb.equal(root.get("category"), category));
         Query query = session.createQuery(cq);
-        List<ProductCategory> categoriesListByProduct = query.getResultList();
+        // Можно ли сразу получить Product, а не ProductCategory?
+        List<ProductCategory> productListByCategory = query.getResultList();
         session.close();
-        return categoriesListByProduct;
+        return productListByCategory;
     }
 }

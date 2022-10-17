@@ -35,6 +35,11 @@ public class CategoryHelper {
         Query query = session.createQuery(cq);
         List<Categories> categoriesList = query.getResultList();
         List<String> categoriesNameList = new LinkedList<>();
+        String upCat = "";
+        if (upCategoryId != 0) {
+            upCat = upCategoryNameByUpId(upCategoryId);
+            categoriesNameList.add(upCat);
+        }
         for (Categories cat : categoriesList) {
             categoriesNameList.add(cat.getCategoryName());
         }
@@ -53,5 +58,26 @@ public class CategoryHelper {
         int id = categoriesList.get(0).getCategoryId();
         session.close();
         return id;
+    }
+
+    private String upCategoryNameByUpId(int upCategoryId) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Categories> cq = cb.createQuery(Categories.class);
+        Root<Categories> root = cq.from(Categories.class);
+        cq.select(root).where(cb.equal(root.get("categoryId"), upCategoryId));
+        Query query = session.createQuery(cq);
+        List<Categories> categoriesList = query.getResultList();
+        if (!categoriesList.isEmpty()) {
+            return categoriesList.get(0).getCategoryName();
+        } else {
+            return "";
+        }
+    }
+
+    public Categories categoryById(int categoryId) {
+        Session session = sessionFactory.openSession();
+        Categories cat = session.load(Categories.class, categoryId);
+        return cat;
     }
 }

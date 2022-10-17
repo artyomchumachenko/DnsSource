@@ -1,4 +1,4 @@
-#regAccButton, #signAccButton {
+#regAccButton, #signAccButton, #acceptFilters, #cancelFilters {
     -fx-background-color: #54a4ff;
 }
 #filterVBox {

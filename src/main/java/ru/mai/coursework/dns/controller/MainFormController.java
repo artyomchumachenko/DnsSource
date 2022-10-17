@@ -1,12 +1,17 @@
 package ru.mai.coursework.dns.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import ru.mai.coursework.dns.helpers.CategoryHelper;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
 import java.io.FileNotFoundException;
@@ -14,6 +19,7 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.IntStream;
 
 public class MainFormController implements Initializable {
 
@@ -41,18 +47,14 @@ public class MainFormController implements Initializable {
     @FXML
     private VBox priceVBox;
 
-    /**
-     * Select buttons (need to write handlers for product buttons and other)
-     */
     @FXML
-    public void selectButton(MouseEvent event) {
-        System.out.println("Select button successfully");
-        Object eventSource = event.getSource();
-        if (eventSource instanceof Button) {
-            Button clickButton = (Button) eventSource;
-            ProductViewController.clickOnProductButton(clickButton);
-        }
-    }
+    private ComboBox<String> categoryComboBox;
+
+    @FXML
+    private Button acceptFilters;
+
+    @FXML
+    private Button cancelFilters;
 
     private void initAllImages() {
         try {
@@ -63,18 +65,6 @@ public class MainFormController implements Initializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void initFirstProducts() {
-        System.out.println("Init all products successfully");
-        productButtonsList = productsVBox.getChildren().stream().toList();
-        priceList = priceVBox.getChildren().stream().toList();
-        leftImage.setDisable(true);
-        leftImage.setVisible(false);
-        int startProductIndex = 0;
-        ProductViewController.printProducts(productButtonsList, priceList,
-                rightImage, leftImage, searchingField,
-                startProductIndex);
     }
 
     private void pagingProductHandlers() {
@@ -99,14 +89,79 @@ public class MainFormController implements Initializable {
         System.out.println("Searching operation successfully");
         searchingImage.setOnMouseClicked(event -> {
             String name = searchingField.getText();
-            numberOfPage.setText(String.valueOf(1));
             ProductViewController.printSearchingResults(
                     productButtonsList,
                     name,
                     priceList,
                     rightImage, leftImage,
-                    searchingField);
+                    searchingField, numberOfPage);
         });
+    }
+
+    @FXML
+    public void selectButton(MouseEvent event) {
+        System.out.println("Select button successfully");
+        Object eventSource = event.getSource();
+        if (eventSource instanceof Button) {
+            Button clickButton = (Button) eventSource;
+            ProductViewController.clickOnProductButton(clickButton);
+        }
+    }
+
+    private void initFirstProducts() {
+        System.out.println("Init all products successfully");
+        ProductViewController.resetProductList();
+        productButtonsList = productsVBox.getChildren().stream().toList();
+        priceList = priceVBox.getChildren().stream().toList();
+        leftImage.setDisable(true);
+        leftImage.setVisible(false);
+        int startProductIndex = 0;
+        ProductViewController.printProducts(productButtonsList, priceList,
+                rightImage, leftImage, searchingField,
+                startProductIndex, numberOfPage);
+    }
+
+    private void startCategoriesFilterField() {
+        ObservableList<String> categoryList = FXCollections.observableArrayList("Все товары");
+        List<String> nameList = new CategoryHelper().categoryNameListById(0);
+        categoryList.addAll(nameList);
+        categoryComboBox.setItems(categoryList);
+        categoryComboBox.setValue(categoryList.get(0));
+    }
+
+    @FXML
+    public void categoryBoxListener(ActionEvent event) {
+        if (categoryComboBox.getValue() != null && !categoryComboBox.getValue().equals("Все товары")) {
+            FilterFieldController.reloadCategoryBox(categoryComboBox);
+        }
+        if (categoryComboBox.getItems().size() == 1) {
+            categoryComboBox.setMouseTransparent(true);
+            acceptFilters.setOnAction(event1 -> {
+                acceptFilters();
+            });
+            acceptFilters.fire();
+        }
+    }
+
+    @FXML
+    public void acceptFilters() {
+        System.out.println("Click to accept filters");
+        ProductViewController.printCategoryFilterResults(
+                productButtonsList,
+                priceList,
+                rightImage,
+                leftImage,
+                searchingField,
+                numberOfPage
+        );
+    }
+
+    @FXML
+    public void cancelFilters() {
+        System.out.println("Click to cancel filters");
+        startCategoriesFilterField();
+        categoryComboBox.setMouseTransparent(false);
+        initFirstProducts();
     }
 
     @Override
@@ -115,5 +170,7 @@ public class MainFormController implements Initializable {
         initFirstProducts();
         pagingProductHandlers();
         searchingHandlers();
+
+        startCategoriesFilterField();
     }
 }

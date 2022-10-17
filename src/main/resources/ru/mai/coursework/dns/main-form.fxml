@@ -81,7 +81,7 @@
       </VBox>
       <VBox fx:id="filterVBox" layoutX="17.0" layoutY="169.0" prefHeight="372.0" prefWidth="181.0">
          <children>
-            <ComboBox fx:id="categoryComboBox" prefHeight="30.0" prefWidth="182.0" />
+            <ComboBox fx:id="categoryComboBox" onAction="#categoryBoxListener" prefWidth="181.0" />
          </children></VBox>
       <Label fx:id="searchLabel" layoutX="17.0" layoutY="133.0" prefHeight="36.0" prefWidth="155.0" text="Фильтр поиска">
          <font>
@@ -106,6 +106,11 @@
             <TextField fx:id="numberOfPage" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="30.0" text="1" />
          </children>
       </HBox>
-      <Button fx:id="acceptFilters" layoutX="111.0" layoutY="543.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Применить" />
+      <HBox fx:id="acceptFilterHBox" layoutX="17.0" layoutY="543.0" prefHeight="30.0" prefWidth="181.0" spacing="5.0">
+         <children>
+            <Button fx:id="acceptFilters" mnemonicParsing="false" onMouseClicked="#acceptFilters" prefHeight="30.0" prefWidth="87.0" text="Применить" />
+            <Button fx:id="cancelFilters" mnemonicParsing="false" onMouseClicked="#cancelFilters" prefHeight="30.0" prefWidth="87.0" text="Сбросить" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

@@ -8,6 +8,7 @@ import ru.mai.coursework.dns.entity.ProductCategory;
 import ru.mai.coursework.dns.entity.ProductCh;
 import ru.mai.coursework.dns.helpers.ProductHelper;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ProductViewController {
@@ -45,9 +46,9 @@ public class ProductViewController {
                                      List<Button> priceButtons,
                                      ImageView rightImage, ImageView leftImage,
                                      TextField searchField,
-                                     int startProductIndex) {
+                                     int startProductIndex,
+                                     TextField page) {
         if (productList.isEmpty()) {
-            searchField.setText("");
             productList = new ProductHelper().productListAll(); // If the list is empty we fill it with all products
         }
         enableArrow(rightImage);
@@ -57,6 +58,7 @@ public class ProductViewController {
         nextPageProductIndex = NUM_OF_BUTTON;
         lastIndexOfProducts = productList.size() - ONE;
         pageNumber = ONE;
+        page.setText(String.valueOf(pageNumber));
 
         while (currentProductIndexToLoad < nextPageProductIndex) {
             if (currentProductIndexToLoad > lastIndexOfProducts) {
@@ -81,6 +83,10 @@ public class ProductViewController {
         nextPageProductIndex += NUM_OF_BUTTON;
     }
 
+    public static void resetProductList() {
+        productList = new LinkedList<>();
+    }
+
     /**
      * Print searching results
      */
@@ -88,10 +94,19 @@ public class ProductViewController {
                                              String name,
                                              List<Button> priceList,
                                              ImageView rightImage, ImageView leftImage,
-                                             TextField searchField) {
+                                             TextField searchField, TextField page) {
         productList = new ProductHelper().productListByName(name);
         int startProductIndex = 0;
-        printProducts(productButtons, priceList, rightImage, leftImage, searchField, startProductIndex);
+        printProducts(productButtons, priceList, rightImage, leftImage, searchField, startProductIndex, page);
+    }
+
+    public static void printCategoryFilterResults(List<Button> productButtons,
+                                             List<Button> priceList,
+                                             ImageView rightImage, ImageView leftImage,
+                                             TextField searchField, TextField page) {
+        productList = FilterFieldController.filterProductsListResult();
+        int startProductIndex = 0;
+        printProducts(productButtons, priceList, rightImage, leftImage, searchField, startProductIndex, page);
     }
 
     /**
