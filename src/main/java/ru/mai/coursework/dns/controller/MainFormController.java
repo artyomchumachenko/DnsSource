@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import ru.mai.coursework.dns.entity.Categories;
+import ru.mai.coursework.dns.entity.CategoryCh;
+import ru.mai.coursework.dns.entity.Characteristics;
 import ru.mai.coursework.dns.helpers.CategoryHelper;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
@@ -156,6 +159,20 @@ public class MainFormController implements Initializable {
                 acceptFilters();
             });
             acceptFilters.fire();
+
+//            chComboBox
+            Categories category = new CategoryHelper().categoryById(
+                    new CategoryHelper().idByCategoryName(categoryComboBox.getValue())
+            );
+            List<CategoryCh> chList = new CategoryHelper().chListByCategory(category);
+            List<String> chNameList = new LinkedList<>();
+            for (CategoryCh ch : chList) {
+                chNameList.add(ch.getCharacteristic().getChName());
+            }
+            ObservableList<String> items = FXCollections.observableList(chNameList);
+            chComboBox.setVisible(true);
+            chComboBox.setDisable(false);
+            chComboBox.setItems(items);
         }
     }
 

@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
 import ru.mai.coursework.dns.entity.Categories;
+import ru.mai.coursework.dns.entity.CategoryCh;
+import ru.mai.coursework.dns.entity.CategoryCh;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +24,7 @@ public class CategoryHelper {
 
     /**
      * Select categories list from table @categories
+     *
      * @return List
      */
     public List<String> categoryNameListById(int upCategoryId) {
@@ -58,6 +61,18 @@ public class CategoryHelper {
         int id = categoriesList.get(0).getCategoryId();
         session.close();
         return id;
+    }
+
+    public List<CategoryCh> chListByCategory(Categories category) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<CategoryCh> cq = cb.createQuery(CategoryCh.class);
+        Root<CategoryCh> root = cq.from(CategoryCh.class);
+        cq.select(root).where(cb.equal(root.get("category"), category));
+        Query query = session.createQuery(cq);
+        List<CategoryCh> chList = query.getResultList();
+        session.close();
+        return chList;
     }
 
     private String upCategoryNameByUpId(int upCategoryId) {

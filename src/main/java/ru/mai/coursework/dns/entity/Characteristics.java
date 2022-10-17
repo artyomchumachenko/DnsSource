@@ -23,4 +23,7 @@ public class Characteristics implements Serializable {
 
     @OneToMany(mappedBy = "characteristic")
     List<ProductCh> productChs;
+
+    @OneToMany(mappedBy = "characteristic")
+    List<CategoryCh> categoriesCh;
 }

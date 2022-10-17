@@ -26,4 +26,7 @@ public class Categories implements Serializable {
 
     @OneToMany(mappedBy = "category")
     List<ProductCategory> productCategories;
+
+    @OneToMany(mappedBy = "category")
+    List<CategoryCh> categoriesCh;
 }
