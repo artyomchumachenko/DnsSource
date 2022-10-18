@@ -27,7 +27,15 @@ public class FilterFieldController {
         categoryComboBox.setItems(obsList);
     }
 
-    public static List<Product> filterProductsListResult(int amount) {
+    public static void startComboBoxCategories(ComboBox<String> categoryComboBox) {
+        ObservableList<String> categoryList = FXCollections.observableArrayList("Все товары");
+        List<String> nameList = new CategoryHelper().categoryNameListById(0); // *nameCategoryListById
+        categoryList.addAll(nameList);
+        categoryComboBox.setItems(categoryList);
+        categoryComboBox.setValue(categoryList.get(0));
+    }
+
+    public static List<Product> productListByCategory(int amount) {
         Categories currentCategory = new CategoryHelper().categoryById(currentCategoryId);
         List<ProductCategory> productListByCategory = new ProductHelper().productListByCategory(
                 currentCategory,

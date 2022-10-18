@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import ru.mai.coursework.dns.entity.Product;
 import ru.mai.coursework.dns.entity.ProductCategory;
 import ru.mai.coursework.dns.entity.ProductCh;
@@ -33,20 +34,24 @@ public class ProductViewController {
     private static final int NUM_OF_BUTTON = 5;
     private static final int ONE = 1;
     private static final int TWO = 2;
+    private static boolean isSelectedCategoryFound = true;
 
     private static List<Product> productList = new ProductHelper().productListAll(NUM_OF_BUTTON * ONE);
 
     /**
      * Method which initializes current pButtons, imgButtons, priceButtons
      */
-    public static void printProducts(List<Button> productButtons,
-                                     List<Button> priceButtons,
-                                     ImageView rightImage, ImageView leftImage,
-                                     int startProductIndex,
-                                     TextField page) {
+    public static void printProducts(
+            List<Button> productButtons,
+            List<Button> priceButtons,
+            ImageView rightImage, ImageView leftImage,
+            int startProductIndex,
+            TextField page
+    ) {
         pageNumber = ONE;
         if (productList.isEmpty()) {
-            productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber); // If the list is empty we fill it with all products
+            // If the list is empty we fill it with all products
+            productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber);
         }
         enableArrow(rightImage);
         disableArrow(leftImage);
@@ -86,23 +91,26 @@ public class ProductViewController {
     /**
      * Print searching results
      */
-    public static void printSearchingResults(List<Button> productButtons,
-                                             String name,
-                                             List<Button> priceList,
-                                             ImageView rightImage, ImageView leftImage,
-                                             TextField page) {
+    public static void printSearchingResults(
+            List<Button> productButtons,
+            String name,
+            List<Button> priceList,
+            ImageView rightImage, ImageView leftImage,
+            TextField page
+    ) {
         productList = new ProductHelper().productListByName(name);
         int startProductIndex = 0;
         printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
     }
 
-    private static boolean isSelectedCategoryFound = true;
-    public static void printCategoryFilterResults(List<Button> productButtons,
-                                                  List<Button> priceList,
-                                                  ImageView rightImage, ImageView leftImage,
-                                                  TextField page) {
+    public static void printCategoryFilterResults(
+            List<Button> productButtons,
+            List<Button> priceList,
+            ImageView rightImage, ImageView leftImage,
+            TextField page
+    ) {
         List<Product> bufferProductList = productList;
-        productList = FilterFieldController.filterProductsListResult(NUM_OF_BUTTON * pageNumber);
+        productList = FilterFieldController.productListByCategory(NUM_OF_BUTTON * pageNumber);
         if (productList.isEmpty()) {
             isSelectedCategoryFound = false;
             productList = bufferProductList;
@@ -115,10 +123,12 @@ public class ProductViewController {
     /**
      * Print prev product page
      */
-    public static void loadPrevPageProducts(List<Button> productButtons,
-                                            List<Button> priceButtons,
-                                            ImageView rightImage, ImageView leftImage,
-                                            TextField page) {
+    public static void loadPrevPageProducts(
+            List<Button> productButtons,
+            List<Button> priceButtons,
+            ImageView rightImage, ImageView leftImage,
+            TextField page
+    ) {
         currentProductButtonIndex = 0;
         pageNumber--;
         currentProductIndexToLoad = NUM_OF_BUTTON * (pageNumber - ONE);
@@ -140,15 +150,17 @@ public class ProductViewController {
         enableArrow(rightImage);
     }
 
-    public static void loadNextPageProducts(List<Button> productButtons,
-                                            List<Button> priceButtons,
-                                            ImageView rightImage, ImageView leftImage,
-                                            TextField page,
-                                            ComboBox<String> cmbBox) {
+    public static void loadNextPageProducts(
+            List<Button> productButtons,
+            List<Button> priceButtons,
+            ImageView rightImage, ImageView leftImage,
+            TextField page,
+            ComboBox<String> cmbBox
+    ) {
         currentProductButtonIndex = 0;
         pageNumber++;
         if (cmbBox.getValue() != null && !cmbBox.getValue().equals("Все товары") && isSelectedCategoryFound) {
-            productList = FilterFieldController.filterProductsListResult(NUM_OF_BUTTON * pageNumber);
+            productList = FilterFieldController.productListByCategory(NUM_OF_BUTTON * pageNumber);
         } else {
             productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber);
         }
@@ -183,7 +195,15 @@ public class ProductViewController {
         arrow.setVisible(false);
     }
 
-    public static void clickOnProductButton(Button productButton) {
+    public static void clickProductButtonHandler(MouseEvent event) {
+        System.out.println("Select button successfully");
+        Object eventSource = event.getSource();
+        if (eventSource instanceof Button clickButton) {
+            clickOnProductButton(clickButton);
+        }
+    }
+
+    private static void clickOnProductButton(Button productButton) {
         String buttonId = productButton.getId();
         buttonId = buttonId.replaceAll(REGEX_BUTTON_ID, "");
         int clickProductId = Integer.parseInt(buttonId) + NUM_OF_BUTTON * (pageNumber - ONE);
@@ -200,10 +220,12 @@ public class ProductViewController {
         }
     }
 
-    private static void changeStateButtons(int buttonIndex,
-                                           List<Button> button,
-                                           List<Button> price,
-                                           boolean disable) {
+    private static void changeStateButtons(
+            int buttonIndex,
+            List<Button> button,
+            List<Button> price,
+            boolean disable
+    ) {
         button.get(buttonIndex).setDisable(disable);
         button.get(buttonIndex).setVisible(!disable);
         price.get(buttonIndex).setDisable(disable);

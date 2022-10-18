@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
 import ru.mai.coursework.dns.entity.Categories;
 import ru.mai.coursework.dns.entity.CategoryCh;
-import ru.mai.coursework.dns.entity.CategoryCh;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -69,6 +68,7 @@ public class CategoryHelper {
         CriteriaQuery<CategoryCh> cq = cb.createQuery(CategoryCh.class);
         Root<CategoryCh> root = cq.from(CategoryCh.class);
         cq.select(root).where(cb.equal(root.get("category"), category));
+        cq.orderBy(cb.asc(root.get("characteristic")));
         Query query = session.createQuery(cq);
         List<CategoryCh> chList = query.getResultList();
         session.close();
@@ -93,5 +93,18 @@ public class CategoryHelper {
     public Categories categoryById(int categoryId) {
         Session session = sessionFactory.openSession();
         return session.getReference(Categories.class, categoryId);
+    }
+
+    public Categories categoryByName(String categoryName) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Categories> cq = cb.createQuery(Categories.class);
+        Root<Categories> root = cq.from(Categories.class);
+        cq.select(root).where(cb.equal(root.get("categoryName"), categoryName));
+        Query query = session.createQuery(cq);
+        List<Categories> categoriesList = query.getResultList();
+        Categories category = categoriesList.get(0);
+        session.close();
+        return category;
     }
 }

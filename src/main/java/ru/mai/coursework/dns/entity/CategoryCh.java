@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "category_characteristic")
 @Getter
@@ -22,4 +24,7 @@ public class CategoryCh {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "characteristic_id")
     Characteristics characteristic;
+
+    @OneToMany(mappedBy = "categoryCh")
+    List<VariantsCategoryCh> variantsCategoryChs;
 }
