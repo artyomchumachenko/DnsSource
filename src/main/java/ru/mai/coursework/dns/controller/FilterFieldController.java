@@ -3,6 +3,7 @@ package ru.mai.coursework.dns.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -10,10 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import ru.mai.coursework.dns.entity.Categories;
-import ru.mai.coursework.dns.entity.CategoryCh;
-import ru.mai.coursework.dns.entity.Product;
-import ru.mai.coursework.dns.entity.ProductCategory;
+import ru.mai.coursework.dns.entity.*;
+import ru.mai.coursework.dns.helpers.CategoryChHelper;
 import ru.mai.coursework.dns.helpers.CategoryHelper;
 import ru.mai.coursework.dns.helpers.ProductHelper;
 
@@ -22,6 +21,8 @@ import java.util.List;
 
 public class FilterFieldController {
     private static int currentCategoryId;
+    private static List<ComboBox<String>> characteristicsList = new LinkedList<>();
+    private static List<ComboBox<String>> valueCharacteristicsList = new LinkedList<>();
 
     /**
      * Обновление categoryComboBox при выборе новой категории
@@ -36,7 +37,7 @@ public class FilterFieldController {
     private static void clickOnCategory(ComboBox<String> categoryComboBox) {
         String currentCategoryName = categoryComboBox.getValue();
         currentCategoryId = new CategoryHelper().idByCategoryName(currentCategoryName);
-        List<Categories> newCategoryList = new CategoryHelper().categoryNameListById(currentCategoryId);
+        List<Categories> newCategoryList = new CategoryHelper().categoryNameListByUpperId(currentCategoryId);
         ObservableList<String> observableList = FXCollections.observableArrayList(currentCategoryName);
         // Заполнение списка новых категорий для categoryComboBox
         for (Categories category : newCategoryList) {
@@ -51,7 +52,7 @@ public class FilterFieldController {
      */
     public static void startComboBoxCategories(ComboBox<String> categoryComboBox) {
         ObservableList<String> categoryList = FXCollections.observableArrayList("Все товары");
-        List<Categories> newCategoryList = new CategoryHelper().categoryNameListById(0);
+        List<Categories> newCategoryList = new CategoryHelper().categoryNameListByUpperId(0);
         for (Categories category : newCategoryList) {
             String categoryName = category.getCategoryName();
             categoryList.add(categoryName);
@@ -81,7 +82,7 @@ public class FilterFieldController {
     /**
      * Проверка на выбор "низшей" категории из categoryComboBox
      */
-    public static void lastCategoryChecker(
+    public static boolean lastCategoryChecker(
             ComboBox<String> categoryComboBox,
             Button acceptFilters,
             List<Button> productButtonsList,
@@ -107,6 +108,34 @@ public class FilterFieldController {
                     categoryComboBox.getValue(),
                     currProductPropsHBox
             );
+
+            ComboBox<String> chsComboBox = new ComboBox<>();
+            int currCategoryId = currentCategoryId;
+
+            Categories currCategory = new CategoryHelper().categoryById(currCategoryId);
+            List<Characteristics> categoryChsList = new CategoryChHelper().methodName(currCategory);
+            ObservableList<String> observableList = FXCollections.observableArrayList("Characteristics");
+            for (Characteristics characteristics : categoryChsList) {
+                observableList.add(characteristics.getChName());
+            }
+            chsComboBox.setItems(observableList);
+            chsComboBox.setValue(observableList.get(0));
+            chsComboBox.setPrefSize(181, 28);
+            int chsListSize = 0;
+            if (characteristicsList != null) {
+                chsListSize = characteristicsList.size();
+            }
+            chsComboBox.setId("chsComboBox" + chsListSize);
+            chsComboBox.setOnAction(event -> {
+                System.out.println("AAA\t" + chsComboBox.getSelectionModel().getSelectedItem());
+            });
+            characteristicsList.add(chsComboBox);
+            if (characteristicsList != null) {
+                filterVBox.getChildren().add(characteristicsList.get(0));
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -143,5 +172,11 @@ public class FilterFieldController {
         testButton.setAlignment(Pos.CENTER_LEFT);
         testButton.setMaxSize(120, 33);
         currProductPropsHBox.getChildren().add(testButton);
+    }
+
+    public static void resetFilters() {
+        currentCategoryId = 0;
+        characteristicsList = new LinkedList<>();
+        valueCharacteristicsList = new LinkedList<>();
     }
 }

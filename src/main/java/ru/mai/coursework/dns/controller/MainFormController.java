@@ -1,8 +1,10 @@
 package ru.mai.coursework.dns.controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -27,10 +29,18 @@ public class MainFormController implements Initializable {
         pagingProductHandlers();
         searchingHandlers();
         startCategoriesComboBox();
+
+        filterVBox.setOnMouseClicked(event -> {
+            System.out.println("FilterVBox is mouse clicked");
+            for (Node item : allItemsFromFilterVBox) {
+                System.out.println("Item: " + item.getId());
+            }
+        });
     }
 
     List productButtonsList = new LinkedList<>();
     List priceList = new LinkedList<>();
+    ObservableList<Node> allItemsFromFilterVBox;
 
     @FXML
     private VBox productsVBox;
@@ -158,23 +168,28 @@ public class MainFormController implements Initializable {
         );
     }
 
-    private void finalCategorySelected() {
-        FilterFieldController.lastCategoryChecker(
-                categoryComboBox,
-                acceptFilters,
-                productButtonsList,
-                priceList,
-                rightImage, leftImage,
-                numberOfPage,
-                currProductPropsHBox,
-                filterVBox
-        );
+    private void finalCategorySelectedChecker() {
+        if (
+                FilterFieldController.lastCategoryChecker(
+                        categoryComboBox,
+                        acceptFilters,
+                        productButtonsList,
+                        priceList,
+                        rightImage, leftImage,
+                        numberOfPage,
+                        currProductPropsHBox,
+                        filterVBox
+                )
+        ) {
+            allItemsFromFilterVBox = filterVBox.getChildren();
+        }
     }
 
     /**
      * Сброс всех применённых фильтров
      */
     private void resetAllFilters() {
+        FilterFieldController.resetFilters();
         filterVBox.getChildren().remove(1, filterVBox.getChildren().size());
         currProductPropsHBox.getChildren().remove(1, currProductPropsHBox.getChildren().size());
         startCategoriesComboBox();
@@ -205,7 +220,7 @@ public class MainFormController implements Initializable {
         if (categoryComboBox.getValue() != null && !categoryComboBox.getValue().equals("Все товары")) {
             FilterFieldController.reloadCategoryBox(categoryComboBox);
         }
-        finalCategorySelected();
+        finalCategorySelectedChecker();
     }
 
     /**
