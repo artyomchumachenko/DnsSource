@@ -15,31 +15,40 @@ import java.util.List;
 
 public class ProductViewController {
     /**
-     * Next product index after product in pButton5
+     * Индекс первого продукта для загрузки на следующую страницу
      */
     private static int nextPageProductIndex;
     /**
-     * Current product index which adding to pButton
+     * Текущий индекс продукта для загрузки из базы данных
      */
     private static int currentProductIndexToLoad;
     /**
-     * Current pButton which will be filling with product
+     * Текущий индекс кнопки товара для загрузки информации из базы данных
      */
     private static int currentProductButtonIndex;
     private static int pageNumber;
     /**
-     * Amount of pButtons
+     * Регулярка для выделения индекса из названия кнопки
+     * Пример: pButton4 -> id = 4; нажата кнопка №5
      */
     private static final String REGEX_BUTTON_ID = "\\D";
+    /**
+     * Количество кнопок товаров на главной странице
+     */
     private static final int NUM_OF_BUTTON = 5;
     private static final int ONE = 1;
     private static final int TWO = 2;
+    /**
+     * Низшая категория товара найдена
+     */
     private static boolean isSelectedCategoryFound = true;
-
+    /**
+     * Загрузка первых 5 товаров из базы данных в список товаров
+     */
     private static List<Product> productList = new ProductHelper().productListAll(NUM_OF_BUTTON * ONE);
 
     /**
-     * Method which initializes current pButtons, imgButtons, priceButtons
+     * Вывод продуктов из productList в pButtons
      */
     public static void printProducts(
             List<Button> productButtons,
@@ -84,12 +93,15 @@ public class ProductViewController {
         nextPageProductIndex += NUM_OF_BUTTON;
     }
 
+    /**
+     * Очистка productList
+     */
     public static void resetProductList() {
         productList = new LinkedList<>();
     }
 
     /**
-     * Print searching results
+     * Вывод продуктов, полученных в результате поиска по названию
      */
     public static void printSearchingResults(
             List<Button> productButtons,
@@ -98,18 +110,24 @@ public class ProductViewController {
             ImageView rightImage, ImageView leftImage,
             TextField page
     ) {
+        // Заполнение productList из базы данных по названию продукта
         productList = new ProductHelper().productListByName(name);
         int startProductIndex = 0;
         printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
     }
 
+    /**
+     * Вывод продуктов, соответствующих определённой категории, выбранной в categoryComboBox
+     */
     public static void printCategoryFilterResults(
             List<Button> productButtons,
             List<Button> priceList,
             ImageView rightImage, ImageView leftImage,
             TextField page
     ) {
+        // Сохраняем копию текущего productList на случай, если товаров, выбранной категории, не будет найдено
         List<Product> bufferProductList = productList;
+        // Заполнение productList из базы данных по выбранной категории
         productList = FilterFieldController.productListByCategory(NUM_OF_BUTTON * pageNumber);
         if (productList.isEmpty()) {
             isSelectedCategoryFound = false;
@@ -121,7 +139,7 @@ public class ProductViewController {
     }
 
     /**
-     * Print prev product page
+     * Вывод предыдущей старницы товаров
      */
     public static void loadPrevPageProducts(
             List<Button> productButtons,
@@ -150,6 +168,9 @@ public class ProductViewController {
         enableArrow(rightImage);
     }
 
+    /**
+     * Загрузка следующей страницы с товарами
+     */
     public static void loadNextPageProducts(
             List<Button> productButtons,
             List<Button> priceButtons,
@@ -159,11 +180,13 @@ public class ProductViewController {
     ) {
         currentProductButtonIndex = 0;
         pageNumber++;
+
         if (cmbBox.getValue() != null && !cmbBox.getValue().equals("Все товары") && isSelectedCategoryFound) {
             productList = FilterFieldController.productListByCategory(NUM_OF_BUTTON * pageNumber);
         } else {
             productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber);
         }
+
         int lastIndexOfProducts = productList.size() - ONE;
 
         while (currentProductIndexToLoad < nextPageProductIndex) {
@@ -195,6 +218,9 @@ public class ProductViewController {
         arrow.setVisible(false);
     }
 
+    /**
+     * Слушатель кликов на кнопки товаров
+     */
     public static void clickProductButtonHandler(MouseEvent event) {
         System.out.println("Select button successfully");
         Object eventSource = event.getSource();
@@ -203,9 +229,13 @@ public class ProductViewController {
         }
     }
 
+    /**
+     * Вывод информации о товаре, на который кликнул пользователь
+     */
     private static void clickOnProductButton(Button productButton) {
         String buttonId = productButton.getId();
         buttonId = buttonId.replaceAll(REGEX_BUTTON_ID, "");
+        // Индекс продукта в productList'e на который нажал пользователь
         int clickProductId = Integer.parseInt(buttonId) + NUM_OF_BUTTON * (pageNumber - ONE);
         Product clickProduct = productList.get(clickProductId);
 
@@ -220,6 +250,9 @@ public class ProductViewController {
         }
     }
 
+    /**
+     * Изменение состояния видимости кнопок товаров
+     */
     private static void changeStateButtons(
             int buttonIndex,
             List<Button> button,

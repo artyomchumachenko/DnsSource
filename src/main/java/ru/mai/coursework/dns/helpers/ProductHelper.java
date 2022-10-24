@@ -62,8 +62,9 @@ public class ProductHelper {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<ProductCategory> cq = cb.createQuery(ProductCategory.class);
         Root<ProductCategory> root = cq.from(ProductCategory.class);
-        cq.select(root);
-        cq.where(cb.equal(root.get("category"), category));
+        cq
+                .select(root)
+                .where(cb.equal(root.get("category"), category));
         Query query = session.createQuery(cq);
         // Можно ли сразу получить Product, а не ProductCategory?
         List<ProductCategory> productListByCategory = query.setMaxResults(amount).getResultList();
