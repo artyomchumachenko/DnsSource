@@ -26,5 +26,5 @@ public class CategoryCh {
     Characteristics characteristic;
 
     @OneToMany(mappedBy = "categoryCh")
-    List<VariantsCategoryCh> variantsCategoryChs;
+    List<ChValues> chValues;
 }

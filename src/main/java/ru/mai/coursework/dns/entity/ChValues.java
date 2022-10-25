@@ -5,20 +5,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "variants_of_cat_characteristics")
+@Table(name = "characteristic_values")
 @Getter
 @Setter
-public class VariantsCategoryCh {
+public class ChValues {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "var_id")
-    private int variantId;
-
-    @Column(name = "var_value")
-    private String variantValue;
+    @Column(name = "value_id")
+    private int valueId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cat_ch_id")
     CategoryCh categoryCh;
+
+    @Column(name = "value")
+    private String value;
 }

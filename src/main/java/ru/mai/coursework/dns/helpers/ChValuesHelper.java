@@ -8,29 +8,32 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
 import ru.mai.coursework.dns.entity.CategoryCh;
+import ru.mai.coursework.dns.entity.ChValues;
 import ru.mai.coursework.dns.entity.Characteristics;
 
+import java.util.LinkedList;
 import java.util.List;
 
-public class CharacteristicHelper {
+public class ChValuesHelper {
 
     private SessionFactory sessionFactory;
 
-    public CharacteristicHelper() {
+    public ChValuesHelper() {
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
-    public Characteristics characteristicByName(String chName) {
+    public List<ChValues> valuesListByCategoryCh(CategoryCh categoryCh) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Characteristics> cq = cb.createQuery(Characteristics.class);
-        Root<Characteristics> root = cq.from(Characteristics.class);
+        CriteriaQuery<ChValues> cq = cb.createQuery(ChValues.class);
+        Root<ChValues> root = cq.from(ChValues.class);
         cq
                 .select(root)
-                .where(cb.equal(root.get("chName"), chName));
+                .where(cb.equal(root.get("categoryCh"), categoryCh))
+        ;
         Query query = session.createQuery(cq);
-        List<Characteristics> chs = query.getResultList();
+        List<ChValues> valuesList = query.getResultList();
         session.close();
-        return chs.get(0);
+        return valuesList;
     }
 }

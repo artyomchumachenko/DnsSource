@@ -22,7 +22,7 @@ public class CategoryChHelper {
         sessionFactory = HibernateUtil.getSessionFactory();
     }
 
-    public List<Characteristics> methodName(Categories category) {
+    public List<Characteristics> chsListByCategory(Categories category) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<CategoryCh> cq = cb.createQuery(CategoryCh.class);
@@ -39,5 +39,20 @@ public class CategoryChHelper {
             characteristicsList.add(categoryCh.getCharacteristic());
         }
         return characteristicsList;
+    }
+
+    public CategoryCh categoryChByCategoryAndCharacteristic(Categories category, Characteristics ch) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<CategoryCh> cq = cb.createQuery(CategoryCh.class);
+        Root<CategoryCh> root = cq.from(CategoryCh.class);
+        cq
+                .select(root)
+                .where(cb.and(cb.equal(root.get("category"), category), cb.equal(root.get("characteristic"), ch)))
+        ;
+        Query query = session.createQuery(cq);
+        List<CategoryCh> categoryChList = query.getResultList();
+        session.close();
+        return categoryChList.get(0);
     }
 }
