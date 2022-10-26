@@ -30,12 +30,12 @@ public class MainFormController implements Initializable {
         searchingHandlers();
         startCategoriesComboBox();
 
-        filterVBox.setOnMouseClicked(event -> {
-            System.out.println("FilterVBox is mouse clicked");
-            for (Node item : allItemsFromFilterVBox) {
-                System.out.println("Item: " + item.getId());
-            }
-        });
+//        filterVBox.setOnMouseClicked(event -> {
+//            System.out.println("FilterVBox is mouse clicked");
+//            for (Node item : allItemsFromFilterVBox) {
+//                System.out.println("Item: " + item.getId());
+//            }
+//        });
     }
 
     List productButtonsList = new LinkedList<>();

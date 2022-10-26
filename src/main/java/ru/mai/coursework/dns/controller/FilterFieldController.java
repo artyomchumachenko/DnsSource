@@ -3,7 +3,6 @@ package ru.mai.coursework.dns.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class FilterFieldController {
     private static int currentCategoryId;
-    private static List<ComboBox<String>> characteristicsList = new LinkedList<>();
+    private static ComboBox<String> chsComboBox;
     private static List<ComboBox<String>> valueCharacteristicsList = new LinkedList<>();
 
     /**
@@ -108,12 +107,8 @@ public class FilterFieldController {
                     currProductPropsHBox
             );
 
-            // Создание ComboBox'a характеристик и добавление его в characteristicList
+            // asdsadsa
             creatingNewCharacteristicComboBox(filterVBox);
-            // Добавление первого ComboBox'a после выбора категории
-            if (characteristicsList != null) {
-                filterVBox.getChildren().add(characteristicsList.get(0));
-            }
             return true;
         } else {
             return false;
@@ -121,66 +116,64 @@ public class FilterFieldController {
     }
 
     private static void creatingNewCharacteristicComboBox(VBox filterVBox) {
-        ComboBox<String> chsComboBox = new ComboBox<>();
+        chsComboBox = new ComboBox<>();
         int currCategoryId = currentCategoryId;
 
         Categories currCategory = new CategoryHelper().categoryById(currCategoryId);
         List<Characteristics> categoryChsList = new CategoryChHelper().chsListByCategory(currCategory);
-
-        ObservableList<String> observableChsList = FXCollections.observableArrayList("Characteristics");
+        ObservableList<String> observableChsList = FXCollections.observableArrayList();
         for (Characteristics characteristics : categoryChsList) {
             observableChsList.add(characteristics.getChName());
         }
 
         chsComboBox.setItems(observableChsList);
-        chsComboBox.setValue(observableChsList.get(0));
+        chsComboBox.setPromptText("Выбрать характеристику");
         chsComboBox.setPrefSize(251, 28);
+        chsComboBox.setId("chsComboBox");
+        filterVBox.getChildren().add(chsComboBox);
 
-        int chsListSize = 0;
-        if (characteristicsList != null) {
-            chsListSize = characteristicsList.size();
-        }
-        chsComboBox.setId("chsComboBox" + chsListSize);
-        chsComboBox.setOnAction(event -> {
-            if (!chsComboBox.getValue().equals("Characteristic")) {
-                System.out.println("Add ComboBox with " + chsComboBox.getSelectionModel().getSelectedItem());
+        Button acceptAddingCharacteristicButton = new Button("Добавить");
+        acceptAddingCharacteristicButton.setPrefSize(251, 28);
+        acceptAddingCharacteristicButton.setAlignment(Pos.CENTER_LEFT);
+        acceptAddingCharacteristicButton.setOnMouseClicked(event -> {
+            System.out.println("Add ComboBox with " + chsComboBox.getSelectionModel().getSelectedItem());
 
-                String chName = chsComboBox.getSelectionModel().getSelectedItem();
-                Characteristics ch = new CharacteristicHelper().characteristicByName(chName);
-                CategoryCh currCategoryCh = new CategoryChHelper().categoryChByCategoryAndCharacteristic(
-                        currCategory,
-                        ch
-                );
-                System.out.println("Id + \t" + currCategoryCh.getCategoryChId());
-                List<ChValues> chValues = new ChValuesHelper().valuesListByCategoryCh(currCategoryCh);
+            String chName = chsComboBox.getSelectionModel().getSelectedItem();
+            Characteristics ch = new CharacteristicHelper().characteristicByName(chName);
+            CategoryCh currCategoryCh = new CategoryChHelper().categoryChByCategoryAndCharacteristic(
+                    currCategory,
+                    ch
+            );
+            System.out.println("Id + \t" + currCategoryCh.getCategoryChId());
+            List<ChValues> chValues = new ChValuesHelper().valuesListByCategoryCh(currCategoryCh);
 
-                ComboBox<String> chsValueComboBox = new ComboBox<>();
-                Label chNameLabel = new Label(chName);
-                chNameLabel.setPrefSize(251,28);
-                chNameLabel.setAlignment(Pos.CENTER);
-                ObservableList<String> observableValuesList = FXCollections.observableArrayList(chName);
-                for (ChValues value : chValues) {
-                    observableValuesList.add(value.getValue());
-                }
-                chsValueComboBox.setItems(observableValuesList);
-                chsValueComboBox.setValue(observableValuesList.get(0));
-                chsValueComboBox.setPrefSize(251, 28);
-                int valuesListSize = 0;
-                if (valueCharacteristicsList != null) {
-                    valuesListSize = valueCharacteristicsList.size();
-                }
-                chsValueComboBox.setId("valuesComboBox" + valuesListSize);
-                chsValueComboBox.setOnAction(event1 -> {
-                    System.out.println("You clicked on " + chsValueComboBox.getSelectionModel().getSelectedItem());
-                });
-                valueCharacteristicsList.add(chsValueComboBox);
-                filterVBox.getChildren().add(chNameLabel);
-                filterVBox.getChildren().add(valueCharacteristicsList.get(valuesListSize));
-            } else {
-                System.out.println("ABUDABE");
+            ComboBox<String> chsValueComboBox = new ComboBox<>();
+            Label chNameLabel = new Label(chName);
+            chNameLabel.setPrefSize(251, 28);
+            chNameLabel.setAlignment(Pos.CENTER);
+            ObservableList<String> observableValuesList = FXCollections.observableArrayList();
+            for (ChValues value : chValues) {
+                observableValuesList.add(value.getValue());
             }
+            chsValueComboBox.setItems(observableValuesList);
+            chsValueComboBox.setPromptText("Значение");
+            chsValueComboBox.setPrefSize(251, 28);
+            int valuesListSize = 0;
+            if (valueCharacteristicsList != null) {
+                valuesListSize = valueCharacteristicsList.size();
+            }
+            chsValueComboBox.setId("valuesComboBox" + valuesListSize);
+            chsValueComboBox.setOnAction(event1 -> {
+                System.out.println("You clicked on " + chsValueComboBox.getSelectionModel().getSelectedItem());
+
+            });
+            valueCharacteristicsList.add(chsValueComboBox);
+            filterVBox.getChildren().add(chNameLabel);
+            filterVBox.getChildren().add(valueCharacteristicsList.get(valuesListSize));
+            chsComboBox.getItems().remove(chsComboBox.getSelectionModel().getSelectedItem());
+            chsComboBox.getSelectionModel().clearSelection();
         });
-        characteristicsList.add(chsComboBox);
+        filterVBox.getChildren().add(acceptAddingCharacteristicButton);
     }
 
     /**
@@ -220,7 +213,6 @@ public class FilterFieldController {
 
     public static void resetFilters() {
         currentCategoryId = 0;
-        characteristicsList = new LinkedList<>();
         valueCharacteristicsList = new LinkedList<>();
     }
 }
