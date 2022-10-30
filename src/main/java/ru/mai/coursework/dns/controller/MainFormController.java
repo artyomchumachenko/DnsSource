@@ -1,15 +1,15 @@
 package ru.mai.coursework.dns.controller;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ru.mai.coursework.dns.loaders.ImageLoader;
@@ -29,18 +29,17 @@ public class MainFormController implements Initializable {
         pagingProductHandlers();
         searchingHandlers();
         startCategoriesComboBox();
-
-//        filterVBox.setOnMouseClicked(event -> {
-//            System.out.println("FilterVBox is mouse clicked");
-//            for (Node item : allItemsFromFilterVBox) {
-//                System.out.println("Item: " + item.getId());
-//            }
-//        });
+        initScrollPaneForFilters();
     }
 
+    /**
+     * List, содержащий кнопки "Товаров" и "Цен"
+     */
     List productButtonsList = new LinkedList<>();
     List priceList = new LinkedList<>();
-    ObservableList<Node> allItemsFromFilterVBox;
+
+    @FXML
+    private AnchorPane mainAnchorPane;
 
     @FXML
     private VBox productsVBox;
@@ -75,9 +74,6 @@ public class MainFormController implements Initializable {
     @FXML
     private VBox filterVBox;
 
-    @FXML
-    private VBox filterDeleterVBox;
-
     /**
      * Инициализация всех ImageView приложения
      */
@@ -92,6 +88,18 @@ public class MainFormController implements Initializable {
     }
 
     /**
+     * Инициализация Scroll Pane'a для Combo Box'a с фильтрами
+     */
+    private void initScrollPaneForFilters() {
+        ScrollPane scroll = new ScrollPane();
+        scroll.setContent(filterVBox);
+        scroll.setLayoutX(17);
+        scroll.setLayoutY(169);
+        scroll.setPrefWidth(268);
+        mainAnchorPane.getChildren().add(scroll);
+    }
+
+    /**
      * Слушатель нажатия на стрелки для листания страниц с товарами
      */
     private void pagingProductHandlers() {
@@ -101,7 +109,8 @@ public class MainFormController implements Initializable {
                 rightImage,
                 leftImage,
                 numberOfPage,
-                categoryComboBox
+                categoryComboBox,
+                searchingField
         ));
         leftImage.setOnMouseClicked(event -> ProductViewController.loadPrevPageProducts(
                 productButtonsList,
@@ -168,21 +177,21 @@ public class MainFormController implements Initializable {
         );
     }
 
+    /**
+     * Проверка на выбор "самой низшей" категории из Combo Box'a
+     * для подгрузки товаров из базы данных
+     */
     private void finalCategorySelectedChecker() {
-        if (
-                FilterFieldController.lastCategoryChecker(
-                        categoryComboBox,
-                        acceptFilters,
-                        productButtonsList,
-                        priceList,
-                        rightImage, leftImage,
-                        numberOfPage,
-                        currProductPropsHBox,
-                        filterVBox
-                )
-        ) {
-            allItemsFromFilterVBox = filterVBox.getChildren();
-        }
+        FilterFieldController.lastCategoryChecker(
+                categoryComboBox,
+                acceptFilters,
+                productButtonsList,
+                priceList,
+                rightImage, leftImage,
+                numberOfPage,
+                currProductPropsHBox,
+                filterVBox
+        );
     }
 
     /**

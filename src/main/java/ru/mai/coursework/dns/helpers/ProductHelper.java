@@ -7,9 +7,7 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
-import ru.mai.coursework.dns.entity.Categories;
-import ru.mai.coursework.dns.entity.Product;
-import ru.mai.coursework.dns.entity.ProductCategory;
+import ru.mai.coursework.dns.entity.*;
 
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class ProductHelper {
      *
      * @return List
      */
-    public List<Product> productListByName(String name) {
+    public List<Product> productListByName(String name, int amount) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -52,7 +50,7 @@ public class ProductHelper {
         cq.select(root);
         cq.where(cb.like(root.get("productName"), "%" + name + "%"));
         Query query = session.createQuery(cq);
-        List<Product> productListByName = query.getResultList();
+        List<Product> productListByName = query.setMaxResults(amount).getResultList();
         session.close();
         return productListByName;
     }
@@ -70,5 +68,39 @@ public class ProductHelper {
         List<ProductCategory> productListByCategory = query.setMaxResults(amount).getResultList();
         session.close();
         return productListByCategory;
+    }
+
+    public List<ProductCh> productChListByFilters(
+            Categories category, int amount,
+            int amountFilters,
+            List<Characteristics> characteristicsList,
+            List<String> valueList
+    ) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<ProductCategory> cq = cb.createQuery(ProductCategory.class);
+        Root<ProductCategory> root = cq.from(ProductCategory.class);
+        cq
+                .select(root)
+                .where(cb.equal(root.get("category"), category));
+        Query query = session.createQuery(cq);
+        // Можно ли сразу получить Product, а не ProductCategory?
+        List<ProductCategory> productListByCategory = query.setMaxResults(amount).getResultList();
+        CriteriaBuilder cb1 = session.getCriteriaBuilder();
+        CriteriaQuery<ProductCh> cq1 = cb1.createQuery(ProductCh.class);
+        Root<ProductCh> root1 = cq1.from(ProductCh.class);
+        for (ProductCategory productCategory : productListByCategory) {
+            for (int j = 0; j < amountFilters; j++) {
+                cq1
+                        .select(root1)
+                        .where(cb1.equal(root1.get("product"), productCategory.getProduct()))
+                        .where(cb1.equal(root1.get("characteristic"), characteristicsList.get(j)))
+                        .where(cb1.equal(root1.get("chValue"), valueList.get(j)));
+            }
+        }
+        Query query1 = session.createQuery(cq1);
+        List<ProductCh> resultProductList = query1.setMaxResults(amount).getResultList();
+        session.close();
+        return resultProductList;
     }
 }

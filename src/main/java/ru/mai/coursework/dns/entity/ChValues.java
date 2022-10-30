@@ -15,7 +15,7 @@ public class ChValues {
     @Column(name = "value_id")
     private int valueId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cat_ch_id")
     CategoryCh categoryCh;
 

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="614.0" prefWidth="881.0" snapToPixel="false" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.MainFormController">
+<AnchorPane fx:id="mainAnchorPane" prefHeight="614.0" prefWidth="881.0" snapToPixel="false" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.MainFormController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -19,7 +19,7 @@
         <Insets />
     </opaqueInsets>
     <children>
-        <VBox fx:id="productsVBox" layoutX="343.0" layoutY="169.0" prefHeight="370.0" prefWidth="395.0" spacing="3.0">
+        <VBox fx:id="productsVBox" layoutX="343.0" layoutY="166.0" prefHeight="370.0" prefWidth="395.0" spacing="3.0">
             <children>
                 <Button fx:id="pButton0" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="399.0" />
                 <Button fx:id="pButton1" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="399.0" />
@@ -28,7 +28,7 @@
                 <Button fx:id="pButton4" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="399.0" />
             </children>
         </VBox>
-        <VBox fx:id="priceVBox" layoutX="741.0" layoutY="169.0" prefHeight="370.0" prefWidth="100.0" spacing="3.0">
+        <VBox fx:id="priceVBox" layoutX="741.0" layoutY="166.0" prefHeight="370.0" prefWidth="100.0" spacing="3.0">
             <children>
                 <Button fx:id="priceButton1" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
                 <Button fx:id="priceButton2" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
@@ -37,17 +37,12 @@
                 <Button fx:id="priceButton5" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
             </children>
         </VBox>
-        <VBox fx:id="filterVBox" layoutX="17.0" layoutY="169.0" prefHeight="372.0" prefWidth="251.0">
-            <children>
-                <ComboBox fx:id="categoryComboBox" onAction="#categoryBoxListener" prefWidth="251.0" />
-            </children>
-        </VBox>
-        <Label fx:id="searchLabel" layoutX="17.0" layoutY="133.0" prefHeight="36.0" prefWidth="155.0" text="Фильтр поиска">
+        <Label fx:id="searchLabel" layoutX="17.0" layoutY="128.0" prefHeight="36.0" prefWidth="155.0" text="Фильтр поиска">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <HBox layoutX="597.0" layoutY="20.0" prefHeight="36.0" prefWidth="241.0" spacing="10.0">
+        <HBox fx:id="regHBox" layoutX="597.0" layoutY="20.0" prefHeight="36.0" prefWidth="241.0" spacing="10.0">
             <children>
                 <Button fx:id="signAccButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="87.0" stylesheets="@css/style.css" text="Войти" />
                 <Button fx:id="regAccButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="138.0" stylesheets="@css/style.css" text="Регистрация" />
@@ -55,14 +50,14 @@
         </HBox>
         <TextField fx:id="searchingField" layoutX="40.0" layoutY="20.0" prefHeight="36.0" prefWidth="414.0" promptText="Поиск по названию" />
         <ImageView fx:id="searchingImage" fitHeight="36.0" fitWidth="36.0" layoutX="455.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
-        <HBox layoutX="611.0" layoutY="548.0" prefHeight="26.0" prefWidth="130.0" spacing="10.0">
+        <HBox fx:id="pagingHBox" layoutX="611.0" layoutY="545.0" prefHeight="26.0" prefWidth="130.0" spacing="10.0">
             <children>
                 <ImageView fx:id="leftImage" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="rightImage" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                 <TextField fx:id="numberOfPage" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="30.0" text="1" />
             </children>
         </HBox>
-        <HBox fx:id="acceptFilterHBox" layoutX="17.0" layoutY="543.0" prefHeight="30.0" prefWidth="181.0" spacing="5.0">
+        <HBox fx:id="acceptFilterHBox" layoutX="17.0" layoutY="545.0" prefHeight="30.0" prefWidth="181.0" spacing="5.0">
             <children>
                 <Button fx:id="acceptFilters" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Применить" />
                 <Button fx:id="cancelFilters" mnemonicParsing="false" onMouseClicked="#cancelFilters" prefHeight="30.0" prefWidth="87.0" text="Сбросить" />
@@ -77,6 +72,10 @@
                 </Label>
             </children>
         </HBox>
-        <VBox fx:id="filterDeleterVBox" layoutX="201.0" layoutY="198.0" prefHeight="342.0" prefWidth="30.0" />
+        <VBox fx:id="filterVBox" layoutX="17.0" layoutY="166.0" prefHeight="372.0" prefWidth="251.0">
+            <children>
+                <ComboBox fx:id="categoryComboBox" onAction="#categoryBoxListener" prefWidth="251.0" />
+            </children>
+        </VBox>
     </children>
 </AnchorPane>

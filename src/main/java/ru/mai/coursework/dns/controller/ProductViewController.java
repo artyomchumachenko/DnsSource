@@ -41,7 +41,7 @@ public class ProductViewController {
     /**
      * Низшая категория товара найдена
      */
-    private static boolean isSelectedCategoryFound = true;
+    private static boolean isSelectedCategoryFound = false;
     /**
      * Загрузка первых 5 товаров из базы данных в список товаров
      */
@@ -97,6 +97,7 @@ public class ProductViewController {
      * Очистка productList
      */
     public static void resetProductList() {
+        isSelectedCategoryFound = false;
         productList = new LinkedList<>();
     }
 
@@ -111,7 +112,7 @@ public class ProductViewController {
             TextField page
     ) {
         // Заполнение productList из базы данных по названию продукта
-        productList = new ProductHelper().productListByName(name);
+        productList = new ProductHelper().productListByName(name, NUM_OF_BUTTON * pageNumber);
         int startProductIndex = 0;
         printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
     }
@@ -130,9 +131,30 @@ public class ProductViewController {
         // Заполнение productList из базы данных по выбранной категории
         productList = FilterFieldController.productListByCategory(NUM_OF_BUTTON * pageNumber);
         if (productList.isEmpty()) {
-            isSelectedCategoryFound = false;
             productList = bufferProductList;
             System.out.println("pl is empty");
+        } else {
+            isSelectedCategoryFound = true;
+        }
+        int startProductIndex = 0;
+        printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
+    }
+
+    public static void printFullFilterResults(
+            List<Button> productButtons,
+            List<Button> priceList,
+            ImageView rightImage, ImageView leftImage,
+            TextField page
+    ) {
+        List<Product> bufferProductList = productList;
+        productList = FilterFieldController.productListByProductChs(
+                NUM_OF_BUTTON * pageNumber
+        );
+        if (productList.isEmpty()) {
+            productList = bufferProductList;
+            System.out.println("ТОВАРОВ НЕ НАЙДЕНО");
+        } else {
+            isSelectedCategoryFound = false;
         }
         int startProductIndex = 0;
         printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
@@ -176,7 +198,8 @@ public class ProductViewController {
             List<Button> priceButtons,
             ImageView rightImage, ImageView leftImage,
             TextField page,
-            ComboBox<String> cmbBox
+            ComboBox<String> cmbBox,
+            TextField textField
     ) {
         currentProductButtonIndex = 0;
         pageNumber++;
@@ -185,6 +208,9 @@ public class ProductViewController {
             productList = FilterFieldController.productListByCategory(NUM_OF_BUTTON * pageNumber);
         } else {
             productList = new ProductHelper().productListAll(NUM_OF_BUTTON * pageNumber);
+        }
+        if (!textField.getText().equals("")) {
+            productList = new ProductHelper().productListByName(textField.getText(), NUM_OF_BUTTON * pageNumber);
         }
 
         int lastIndexOfProducts = productList.size() - ONE;

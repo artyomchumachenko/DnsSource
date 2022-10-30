@@ -19,8 +19,10 @@ import java.util.List;
 
 public class FilterFieldController {
     private static int currentCategoryId;
-    private static ComboBox<String> chsComboBox;
     private static List<ComboBox<String>> valueCharacteristicsList = new LinkedList<>();
+    private static List<Characteristics> characteristicsList = new LinkedList<>();
+    private static int amountCharacteristicsInFilter = 0;
+    private static List<String> valueList = new LinkedList<>();
 
     /**
      * Обновление categoryComboBox при выборе новой категории
@@ -78,9 +80,29 @@ public class FilterFieldController {
     }
 
     /**
+     * Список товаров, соответствующих выбранным фильтрам
+     * @return List(Product)
+     */
+    public static List<Product> productListByProductChs(int amount) {
+        Categories currentCategory = new CategoryHelper().categoryById(currentCategoryId);
+        List<ProductCh> productChList = new ProductHelper().productChListByFilters(
+                currentCategory, amount,
+                amountCharacteristicsInFilter,
+                characteristicsList,
+                valueList
+        );
+        List<Product> productList = new LinkedList<>();
+        for (ProductCh product : productChList) {
+            productList.add(product.getProduct());
+            System.out.println(product.getProduct().getProductName());
+        }
+        return productList;
+    }
+
+    /**
      * Проверка на выбор "низшей" категории из categoryComboBox
      */
-    public static boolean lastCategoryChecker(
+    public static void lastCategoryChecker(
             ComboBox<String> categoryComboBox,
             Button acceptFilters,
             List<Button> productButtonsList,
@@ -107,44 +129,31 @@ public class FilterFieldController {
                     currProductPropsHBox
             );
 
-            // asdsadsa
-            creatingNewCharacteristicComboBox(filterVBox);
-            return true;
-        } else {
-            return false;
+            // Добавление комбо боксов с выбором каждой из характеристик категории
+            addAllChsValueComboBoxes(filterVBox);
         }
     }
 
-    private static void creatingNewCharacteristicComboBox(VBox filterVBox) {
-        chsComboBox = new ComboBox<>();
+    /**
+     * Добавление новых Combo Box'ов
+     * содержащих значения для характеристик
+     * определённой категории товаров
+     */
+    private static void addAllChsValueComboBoxes(VBox filterVBox) {
         int currCategoryId = currentCategoryId;
-
         Categories currCategory = new CategoryHelper().categoryById(currCategoryId);
         List<Characteristics> categoryChsList = new CategoryChHelper().chsListByCategory(currCategory);
         ObservableList<String> observableChsList = FXCollections.observableArrayList();
         for (Characteristics characteristics : categoryChsList) {
             observableChsList.add(characteristics.getChName());
         }
-
-        chsComboBox.setItems(observableChsList);
-        chsComboBox.setPromptText("Выбрать характеристику");
-        chsComboBox.setPrefSize(251, 28);
-        chsComboBox.setId("chsComboBox");
-        filterVBox.getChildren().add(chsComboBox);
-
-        Button acceptAddingCharacteristicButton = new Button("Добавить");
-        acceptAddingCharacteristicButton.setPrefSize(251, 28);
-        acceptAddingCharacteristicButton.setAlignment(Pos.CENTER_LEFT);
-        acceptAddingCharacteristicButton.setOnMouseClicked(event -> {
-            System.out.println("Add ComboBox with " + chsComboBox.getSelectionModel().getSelectedItem());
-
-            String chName = chsComboBox.getSelectionModel().getSelectedItem();
+        for (String chName : observableChsList) {
             Characteristics ch = new CharacteristicHelper().characteristicByName(chName);
+            characteristicsList.add(ch);
             CategoryCh currCategoryCh = new CategoryChHelper().categoryChByCategoryAndCharacteristic(
                     currCategory,
                     ch
             );
-            System.out.println("Id + \t" + currCategoryCh.getCategoryChId());
             List<ChValues> chValues = new ChValuesHelper().valuesListByCategoryCh(currCategoryCh);
 
             ComboBox<String> chsValueComboBox = new ComboBox<>();
@@ -165,15 +174,14 @@ public class FilterFieldController {
             chsValueComboBox.setId("valuesComboBox" + valuesListSize);
             chsValueComboBox.setOnAction(event1 -> {
                 System.out.println("You clicked on " + chsValueComboBox.getSelectionModel().getSelectedItem());
-
+                amountCharacteristicsInFilter++;
+                valueList.add(chsValueComboBox.getValue());
+                characteristicsList.add(ch);
             });
             valueCharacteristicsList.add(chsValueComboBox);
             filterVBox.getChildren().add(chNameLabel);
             filterVBox.getChildren().add(valueCharacteristicsList.get(valuesListSize));
-            chsComboBox.getItems().remove(chsComboBox.getSelectionModel().getSelectedItem());
-            chsComboBox.getSelectionModel().clearSelection();
-        });
-        filterVBox.getChildren().add(acceptAddingCharacteristicButton);
+        }
     }
 
     /**
@@ -188,12 +196,23 @@ public class FilterFieldController {
             TextField numberOfPage
     ) {
         categoryComboBox.setMouseTransparent(true);
-        acceptFilters.setOnAction(event1 -> ProductViewController.printCategoryFilterResults(
-                productButtonsList,
-                priceList,
-                rightImage, leftImage,
-                numberOfPage
-        ));
+        acceptFilters.setOnAction(event1 -> {
+            if (amountCharacteristicsInFilter != 0) {
+                ProductViewController.printFullFilterResults(
+                        productButtonsList,
+                        priceList,
+                        rightImage, leftImage,
+                        numberOfPage
+                );
+            } else {
+                ProductViewController.printCategoryFilterResults(
+                        productButtonsList,
+                        priceList,
+                        rightImage, leftImage,
+                        numberOfPage
+                );
+            }
+        });
         acceptFilters.fire();
     }
 
@@ -211,8 +230,15 @@ public class FilterFieldController {
         currProductPropsHBox.getChildren().add(testButton);
     }
 
+    /**
+     * Сбросить значения всех статических элементов,
+     * относящихся к фильтрам
+     */
     public static void resetFilters() {
         currentCategoryId = 0;
+        amountCharacteristicsInFilter = 0;
         valueCharacteristicsList = new LinkedList<>();
+        characteristicsList = new LinkedList<>();
+        valueList = new LinkedList<>();
     }
 }
