@@ -21,20 +21,20 @@
     <children>
         <VBox fx:id="productsVBox" layoutX="343.0" layoutY="166.0" prefHeight="370.0" prefWidth="395.0" spacing="3.0">
             <children>
-                <Button fx:id="pButton0" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="399.0" />
-                <Button fx:id="pButton1" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="399.0" />
-                <Button fx:id="pButton2" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="399.0" />
-                <Button fx:id="pButton3" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="399.0" />
-                <Button fx:id="pButton4" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton0" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton1" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton2" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton3" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton4" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
             </children>
         </VBox>
         <VBox fx:id="priceVBox" layoutX="741.0" layoutY="166.0" prefHeight="370.0" prefWidth="100.0" spacing="3.0">
             <children>
-                <Button fx:id="priceButton1" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
-                <Button fx:id="priceButton2" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
-                <Button fx:id="priceButton3" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
-                <Button fx:id="priceButton4" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
-                <Button fx:id="priceButton5" mnemonicParsing="false" prefHeight="74.0" prefWidth="100.0" />
+                <Button fx:id="priceButton1" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
+                <Button fx:id="priceButton2" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
+                <Button fx:id="priceButton3" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
+                <Button fx:id="priceButton4" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
+                <Button fx:id="priceButton5" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
             </children>
         </VBox>
         <Label fx:id="searchLabel" layoutX="17.0" layoutY="128.0" prefHeight="36.0" prefWidth="155.0" text="Фильтр поиска">
@@ -42,10 +42,11 @@
                 <Font size="20.0" />
             </font>
         </Label>
-        <HBox fx:id="regHBox" layoutX="597.0" layoutY="20.0" prefHeight="36.0" prefWidth="241.0" spacing="10.0">
+        <HBox fx:id="regHBox" layoutX="505.0" layoutY="20.0" prefHeight="36.0" prefWidth="333.0" spacing="10.0">
             <children>
-                <Button fx:id="signAccButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="87.0" stylesheets="@css/style.css" text="Войти" />
-                <Button fx:id="regAccButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="138.0" stylesheets="@css/style.css" text="Регистрация" />
+            <Button fx:id="basket" mnemonicParsing="false" onMouseClicked="#showBasket" prefHeight="36.0" prefWidth="87.0" stylesheets="@css/style.css" text="Корзина" />
+                <Button fx:id="signAccButton" mnemonicParsing="false" onMouseClicked="#showAuthorizationWindow" prefHeight="36.0" prefWidth="87.0" stylesheets="@css/style.css" text="Войти" />
+                <Button fx:id="regAccButton" mnemonicParsing="false" onMouseClicked="#showRegistrationWindow" prefHeight="36.0" prefWidth="138.0" stylesheets="@css/style.css" text="Регистрация" />
             </children>
         </HBox>
         <TextField fx:id="searchingField" layoutX="40.0" layoutY="20.0" prefHeight="36.0" prefWidth="414.0" promptText="Поиск по названию" />

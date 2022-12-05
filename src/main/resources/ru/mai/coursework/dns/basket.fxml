@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainAnchorPane" prefHeight="442.0" prefWidth="632.0" snapToPixel="false" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.BasketController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <opaqueInsets>
+        <Insets />
+    </opaqueInsets>
+   <children>
+      <VBox fx:id="productListInBasket" layoutX="22.0" layoutY="63.0" prefHeight="330.0" prefWidth="555.0" spacing="5.0" />
+      <Label layoutX="277.0" layoutY="22.0" text="Корзина">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

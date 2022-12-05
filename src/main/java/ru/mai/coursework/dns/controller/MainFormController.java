@@ -2,7 +2,9 @@ package ru.mai.coursework.dns.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -12,15 +14,24 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import ru.mai.coursework.dns.MainApplication;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable {
+
+    public static Stage authStage = null;
+    public static Stage regStage = null;
+    public static Stage showChs = null;
+    public static Stage basket = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -239,5 +250,85 @@ public class MainFormController implements Initializable {
     public void cancelFilters() {
         searchingField.setText("");
         resetAllFilters();
+    }
+
+    @FXML
+    void showAuthorizationWindow(MouseEvent event) {
+        FXMLLoader loader = new FXMLLoader(
+                MainApplication.class.getResource("auth.fxml"));
+        Stage authorizationWindow = new Stage();
+        try {
+            authorizationWindow.setScene(new Scene(loader.load(), 398, 272));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        authorizationWindow.setTitle("Вход");
+        authorizationWindow.initModality(Modality.WINDOW_MODAL);
+        authorizationWindow.initOwner(MainApplication.primaryStage);
+        authorizationWindow.show();
+        authorizationWindow.setResizable(false);
+
+        authStage = authorizationWindow;
+    }
+
+    @FXML
+    void showRegistrationWindow(MouseEvent event) {
+        FXMLLoader loader = new FXMLLoader(
+                MainApplication.class.getResource("regist.fxml"));
+        Stage authorizationWindow = new Stage();
+        try {
+            authorizationWindow.setScene(new Scene(loader.load(), 402, 291));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        authorizationWindow.setTitle("Регистрация");
+        authorizationWindow.initModality(Modality.WINDOW_MODAL);
+        authorizationWindow.initOwner(MainApplication.primaryStage);
+        authorizationWindow.show();
+        authorizationWindow.setResizable(false);
+
+        regStage = authorizationWindow;
+    }
+
+    @FXML
+    void showProductCharacteristics(MouseEvent event) {
+        FXMLLoader loader = new FXMLLoader(
+                MainApplication.class.getResource("show-chs.fxml"));
+        Stage authorizationWindow = new Stage();
+        try {
+            authorizationWindow.setScene(new Scene(loader.load(), 632, 442));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        authorizationWindow.setTitle("Характеристики");
+        authorizationWindow.initModality(Modality.WINDOW_MODAL);
+        authorizationWindow.initOwner(MainApplication.primaryStage);
+        authorizationWindow.show();
+        authorizationWindow.setResizable(false);
+
+        showChs = authorizationWindow;
+    }
+
+    @FXML
+    void showBasket(MouseEvent event) {
+        FXMLLoader loader = new FXMLLoader(
+                MainApplication.class.getResource("basket.fxml"));
+        Stage authorizationWindow = new Stage();
+        try {
+            authorizationWindow.setScene(new Scene(loader.load(), 632, 442));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        authorizationWindow.setTitle("Корзина");
+        authorizationWindow.initModality(Modality.WINDOW_MODAL);
+        authorizationWindow.initOwner(MainApplication.primaryStage);
+        authorizationWindow.show();
+        authorizationWindow.setResizable(false);
+
+        basket = authorizationWindow;
     }
 }

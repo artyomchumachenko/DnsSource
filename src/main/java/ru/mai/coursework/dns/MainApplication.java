@@ -8,15 +8,29 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainApplication extends Application {
+    public static Stage primaryStage;
+    private Scene scene;
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage newPrimaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 MainApplication.class.getResource("main-form.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 881, 614);
-        stage.setTitle("MainForm");
-        stage.setScene(scene);
-        stage.show();
-        stage.setResizable(false);
+        Scene mainScene = new Scene(fxmlLoader.load(), 881, 614);
+        setScene(mainScene);
+//        newPrimaryStage.getIcons().add(new Image("images/railway_icon.png"));
+        newPrimaryStage.setTitle("DNS");
+        newPrimaryStage.setScene(mainScene);
+        newPrimaryStage.show();
+        newPrimaryStage.setResizable(false);
+
+        primaryStage = newPrimaryStage;
     }
 
     public static void main(String[] args) {
