@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" prefHeight="272.0" prefWidth="398.0" snapToPixel="false" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.AuthController">
+<AnchorPane fx:id="mainAnchorPane" prefHeight="272.0" prefWidth="398.0" snapToPixel="false" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.AuthController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -28,19 +28,19 @@
       </AnchorPane>
       <VBox layoutX="33.0" layoutY="84.0" prefHeight="97.0" prefWidth="325.0" spacing="20.0">
          <children>
-            <TextField fx:id="loginTextField" prefHeight="34.0" prefWidth="326.0" promptText="Логин">
+            <TextField fx:id="loginTextField" focusTraversable="false" prefHeight="34.0" prefWidth="326.0" promptText="Логин">
                <font>
                   <Font size="15.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="passwordTextField" prefHeight="34.0" prefWidth="326.0" promptText="Пароль">
+            <PasswordField fx:id="passwordTextField" focusTraversable="false" prefHeight="34.0" prefWidth="326.0" promptText="Пароль">
                <font>
                   <Font size="15.0" />
                </font>
             </PasswordField>
          </children>
       </VBox>
-      <Button fx:id="tryToEnterButton" layoutX="158.0" layoutY="191.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="73.0" text="Войти">
+      <Button fx:id="tryToEnterButton" layoutX="158.0" layoutY="191.0" mnemonicParsing="false" onMouseClicked="#tryToAuth" prefHeight="34.0" prefWidth="73.0" text="Войти">
          <font>
             <Font size="14.0" />
          </font>

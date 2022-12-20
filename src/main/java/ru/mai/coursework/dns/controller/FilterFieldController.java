@@ -3,13 +3,9 @@ package ru.mai.coursework.dns.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import ru.mai.coursework.dns.entity.*;
 import ru.mai.coursework.dns.helpers.*;
@@ -110,7 +106,7 @@ public class FilterFieldController {
             ImageView rightImage, ImageView leftImage,
             TextField numberOfPage,
             HBox currProductPropsHBox,
-            VBox filterVBox
+            ListView<ComboBox<String>> chsListView
     ) {
         // Условие выбора "низшей" категории - она остаётся одна в categoryComboBox
         if (categoryComboBox.getItems().size() == 1) {
@@ -130,7 +126,7 @@ public class FilterFieldController {
             );
 
             // Добавление комбо боксов с выбором каждой из характеристик категории
-            addAllChsValueComboBoxes(filterVBox);
+            addAllChsValueComboBoxes(chsListView);
         }
     }
 
@@ -139,7 +135,7 @@ public class FilterFieldController {
      * содержащих значения для характеристик
      * определённой категории товаров
      */
-    private static void addAllChsValueComboBoxes(VBox filterVBox) {
+    private static void addAllChsValueComboBoxes(ListView<ComboBox<String>> chsListView) {
         int currCategoryId = currentCategoryId;
         Categories currCategory = new CategoryHelper().categoryById(currCategoryId);
         List<Characteristics> categoryChsList = new CategoryChHelper().chsListByCategory(currCategory);
@@ -165,8 +161,8 @@ public class FilterFieldController {
                 observableValuesList.add(value.getValue());
             }
             chsValueComboBox.setItems(observableValuesList);
-            chsValueComboBox.setPromptText("Значение");
-            chsValueComboBox.setPrefSize(251, 28);
+            chsValueComboBox.setPromptText(chName);
+            chsValueComboBox.setPrefSize(268, 28);
             int valuesListSize = 0;
             if (valueCharacteristicsList != null) {
                 valuesListSize = valueCharacteristicsList.size();
@@ -179,8 +175,7 @@ public class FilterFieldController {
                 characteristicsList.add(ch);
             });
             valueCharacteristicsList.add(chsValueComboBox);
-            filterVBox.getChildren().add(chNameLabel);
-            filterVBox.getChildren().add(valueCharacteristicsList.get(valuesListSize));
+            chsListView.getItems().add(chsValueComboBox);
         }
     }
 

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" prefHeight="291.0" prefWidth="402.0" snapToPixel="false" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.RegistController">
+<AnchorPane fx:id="mainAnchorPane" prefHeight="346.0" prefWidth="487.0" snapToPixel="false" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.mai.coursework.dns.controller.RegistController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -17,7 +17,7 @@
         <Insets />
     </opaqueInsets>
    <children>
-      <AnchorPane layoutX="95.0" prefHeight="61.0" prefWidth="200.0">
+      <AnchorPane layoutX="144.0" layoutY="4.0" prefHeight="61.0" prefWidth="200.0">
          <children>
             <Label layoutX="35.0" layoutY="18.0" text="Регистрация">
                <font>
@@ -26,26 +26,31 @@
             </Label>
          </children>
       </AnchorPane>
-      <VBox layoutX="37.0" layoutY="61.0" prefHeight="97.0" prefWidth="325.0" spacing="20.0">
+      <VBox layoutX="81.0" layoutY="72.0" prefHeight="97.0" prefWidth="325.0" spacing="20.0">
          <children>
-            <TextField fx:id="loginTextField" prefHeight="34.0" prefWidth="326.0" promptText="Логин">
+            <TextField fx:id="loginTextField" focusTraversable="false" prefHeight="34.0" prefWidth="326.0" promptText="Логин*">
                <font>
                   <Font size="15.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="passwordTextField" prefHeight="34.0" prefWidth="326.0" promptText="Пароль">
+            <PasswordField fx:id="passwordTextField" focusTraversable="false" prefHeight="34.0" prefWidth="326.0" promptText="Пароль*">
                <font>
                   <Font size="15.0" />
                </font>
             </PasswordField>
-            <PasswordField fx:id="passwordTextField1" prefHeight="34.0" prefWidth="326.0" promptText="Подтвердите пароль">
+            <PasswordField fx:id="passwordTextField1" focusTraversable="false" prefHeight="34.0" prefWidth="326.0" promptText="Подтвердите пароль*">
                <font>
                   <Font size="15.0" />
                </font>
             </PasswordField>
+            <TextField fx:id="phoneTextField" focusTraversable="false" prefHeight="34.0" prefWidth="326.0" promptText="Номер телефона">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
          </children>
       </VBox>
-      <Button fx:id="tryToEnterButton" layoutX="116.0" layoutY="214.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="158.0" text="Зарегистрироваться">
+      <Button fx:id="tryToEnterButton" layoutX="165.0" layoutY="281.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="158.0" text="Зарегистрироваться">
          <font>
             <Font size="14.0" />
          </font>

@@ -7,7 +7,6 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
-import ru.mai.coursework.dns.entity.CategoryCh;
 import ru.mai.coursework.dns.entity.Characteristics;
 
 import java.util.List;

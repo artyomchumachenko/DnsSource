@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,20 +22,20 @@
     <children>
         <VBox fx:id="productsVBox" layoutX="343.0" layoutY="166.0" prefHeight="370.0" prefWidth="395.0" spacing="3.0">
             <children>
-                <Button fx:id="pButton0" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
-                <Button fx:id="pButton1" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
-                <Button fx:id="pButton2" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
-                <Button fx:id="pButton3" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
-                <Button fx:id="pButton4" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton0" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton1" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton2" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton3" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
+                <Button fx:id="pButton4" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#showProductCharacteristics" prefHeight="74.0" prefWidth="399.0" />
             </children>
         </VBox>
         <VBox fx:id="priceVBox" layoutX="741.0" layoutY="166.0" prefHeight="370.0" prefWidth="100.0" spacing="3.0">
             <children>
-                <Button fx:id="priceButton1" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
-                <Button fx:id="priceButton2" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
-                <Button fx:id="priceButton3" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
-                <Button fx:id="priceButton4" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
-                <Button fx:id="priceButton5" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" />
+                <Button fx:id="priceButton0" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" text="Купить" />
+                <Button fx:id="priceButton1" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" text="Купить" />
+                <Button fx:id="priceButton2" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" text="Купить" />
+                <Button fx:id="priceButton3" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" text="Купить" />
+                <Button fx:id="priceButton4" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#clickProductButtonHandler" prefHeight="74.0" prefWidth="100.0" text="Купить" />
             </children>
         </VBox>
         <Label fx:id="searchLabel" layoutX="17.0" layoutY="128.0" prefHeight="36.0" prefWidth="155.0" text="Фильтр поиска">
@@ -44,24 +45,24 @@
         </Label>
         <HBox fx:id="regHBox" layoutX="505.0" layoutY="20.0" prefHeight="36.0" prefWidth="333.0" spacing="10.0">
             <children>
-            <Button fx:id="basket" mnemonicParsing="false" onMouseClicked="#showBasket" prefHeight="36.0" prefWidth="87.0" stylesheets="@css/style.css" text="Корзина" />
-                <Button fx:id="signAccButton" mnemonicParsing="false" onMouseClicked="#showAuthorizationWindow" prefHeight="36.0" prefWidth="87.0" stylesheets="@css/style.css" text="Войти" />
-                <Button fx:id="regAccButton" mnemonicParsing="false" onMouseClicked="#showRegistrationWindow" prefHeight="36.0" prefWidth="138.0" stylesheets="@css/style.css" text="Регистрация" />
+            <Button fx:id="basket" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#showBasket" prefHeight="36.0" prefWidth="87.0" stylesheets="@css/style.css" text="Корзина" />
+                <Button fx:id="signAccButton" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#showAuthorizationWindow" prefHeight="36.0" prefWidth="87.0" stylesheets="@css/style.css" text="Войти" />
+                <Button fx:id="regAccButton" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#showRegistrationWindow" prefHeight="36.0" prefWidth="138.0" stylesheets="@css/style.css" text="Регистрация" />
             </children>
         </HBox>
-        <TextField fx:id="searchingField" layoutX="40.0" layoutY="20.0" prefHeight="36.0" prefWidth="414.0" promptText="Поиск по названию" />
+        <TextField fx:id="searchingField" focusTraversable="false" layoutX="40.0" layoutY="20.0" prefHeight="36.0" prefWidth="414.0" promptText="Поиск по названию" />
         <ImageView fx:id="searchingImage" fitHeight="36.0" fitWidth="36.0" layoutX="455.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
         <HBox fx:id="pagingHBox" layoutX="611.0" layoutY="545.0" prefHeight="26.0" prefWidth="130.0" spacing="10.0">
             <children>
                 <ImageView fx:id="leftImage" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="rightImage" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                <TextField fx:id="numberOfPage" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="30.0" text="1" />
+                <TextField fx:id="numberOfPage" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="25.0" prefWidth="30.0" text="1" />
             </children>
         </HBox>
         <HBox fx:id="acceptFilterHBox" layoutX="17.0" layoutY="545.0" prefHeight="30.0" prefWidth="181.0" spacing="5.0">
             <children>
-                <Button fx:id="acceptFilters" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Применить" />
-                <Button fx:id="cancelFilters" mnemonicParsing="false" onMouseClicked="#cancelFilters" prefHeight="30.0" prefWidth="87.0" text="Сбросить" />
+                <Button fx:id="acceptFilters" focusTraversable="false" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Применить" />
+                <Button fx:id="cancelFilters" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#cancelFilters" prefHeight="30.0" prefWidth="87.0" text="Сбросить" />
             </children>
         </HBox>
         <HBox fx:id="currProductPropsHBox" alignment="CENTER_LEFT" layoutX="343.0" layoutY="126.0" prefHeight="36.0" prefWidth="496.0" spacing="5.0">
@@ -73,10 +74,7 @@
                 </Label>
             </children>
         </HBox>
-        <VBox fx:id="filterVBox" layoutX="17.0" layoutY="166.0" prefHeight="372.0" prefWidth="251.0">
-            <children>
-                <ComboBox fx:id="categoryComboBox" onAction="#categoryBoxListener" prefWidth="251.0" />
-            </children>
-        </VBox>
+      <ListView fx:id="chsListView" focusTraversable="false" layoutX="17.0" layoutY="195.0" prefHeight="340.0" prefWidth="292.0" />
+          <ComboBox fx:id="categoryComboBox" focusTraversable="false" layoutX="17.0" layoutY="166.0" onAction="#categoryBoxListener" prefWidth="251.0" promptText="Категории" />
     </children>
 </AnchorPane>

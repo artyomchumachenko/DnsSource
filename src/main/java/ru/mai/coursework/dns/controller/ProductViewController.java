@@ -1,5 +1,6 @@
 package ru.mai.coursework.dns.controller;
 
+import com.sun.tools.javac.Main;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -46,6 +47,8 @@ public class ProductViewController {
      * Загрузка первых 5 товаров из базы данных в список товаров
      */
     private static List<Product> productList = new ProductHelper().productListAll(NUM_OF_BUTTON * ONE);
+
+    private static Product chosenProduct = null;
 
     /**
      * Вывод продуктов из productList в pButtons
@@ -113,8 +116,13 @@ public class ProductViewController {
     ) {
         // Заполнение productList из базы данных по названию продукта
         productList = new ProductHelper().productListByName(name, NUM_OF_BUTTON * pageNumber);
-        int startProductIndex = 0;
-        printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
+        if (productList.size() != 0) {
+            int startProductIndex = 0;
+            printProducts(productButtons, priceList, rightImage, leftImage, startProductIndex, page);
+        } else MainFormController.showAlertWithoutHeaderText(
+                "Предупреждение!",
+                "Товаров с таким названием не существует"
+        );
     }
 
     /**
@@ -153,6 +161,10 @@ public class ProductViewController {
         if (productList.isEmpty()) {
             productList = bufferProductList;
             System.out.println("ТОВАРОВ НЕ НАЙДЕНО");
+            MainFormController.showAlertWithoutHeaderText(
+                    "Предупреждение!",
+                    "Товаров с такими фильтрами не найдено"
+            );
         } else {
             isSelectedCategoryFound = false;
         }
@@ -258,14 +270,16 @@ public class ProductViewController {
     /**
      * Вывод информации о товаре, на который кликнул пользователь
      */
-    private static void clickOnProductButton(Button productButton) {
+    public static void clickOnProductButton(Button productButton) {
         String buttonId = productButton.getId();
         buttonId = buttonId.replaceAll(REGEX_BUTTON_ID, "");
         // Индекс продукта в productList'e на который нажал пользователь
         int clickProductId = Integer.parseInt(buttonId) + NUM_OF_BUTTON * (pageNumber - ONE);
         Product clickProduct = productList.get(clickProductId);
+        setChosenProduct(clickProduct);
 
         System.out.println("Product name: " + clickProduct.getProductName());
+        MainFormController.addProductToBasket(clickProduct);
         for (ProductCategory cat : clickProduct.getProductCategories()) {
             System.out.println("Product category = " + cat.getCategory().getCategoryName());
             System.out.println("Product upperCategoryId = " + cat.getCategory().getUpCategoryId());
@@ -274,6 +288,14 @@ public class ProductViewController {
             System.out.println("Product chName = " + ch.getCharacteristic().getChName());
             System.out.println("Product chValue = " + ch.getChValue());
         }
+    }
+
+    public static Product getChosenProduct() {
+        return chosenProduct;
+    }
+
+    public static void setChosenProduct(Product chosenProduct) {
+        ProductViewController.chosenProduct = chosenProduct;
     }
 
     /**

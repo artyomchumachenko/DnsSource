@@ -1,46 +1,73 @@
 package ru.mai.coursework.dns.controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.mai.coursework.dns.MainApplication;
+import ru.mai.coursework.dns.entity.Product;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable {
 
+    /**
+     * Состояние окна авторизации
+     */
     public static Stage authStage = null;
+    /**
+     * Состояние окна регистрации
+     */
     public static Stage regStage = null;
+    /**
+     * Состояние окна характеристик товара
+     */
     public static Stage showChs = null;
-    public static Stage basket = null;
+    /**
+     * Состояние окна корзины
+     */
+    public static Stage basketStage = null;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initAllImages();
-        initStartPage();
-        pagingProductHandlers();
-        searchingHandlers();
-        startCategoriesComboBox();
-        initScrollPaneForFilters();
+    public static Stage profileStage = null;
+
+    public static BooleanProperty authState = new SimpleBooleanProperty(false);
+
+    private static List<Product> basketProducts = new ArrayList<>(); // ?????????
+
+    private static String userLogin = "";
+    private static String userPhoneNumber = "";
+
+    public static String getUserLogin() {
+        return userLogin;
+    }
+
+    public static void setUserLogin(String userLogin) {
+        MainFormController.userLogin = userLogin;
+    }
+
+    public static String getUserPhoneNumber() {
+        return userPhoneNumber;
+    }
+
+    public static void setUserPhoneNumber(String userPhoneNumber) {
+        MainFormController.userPhoneNumber = userPhoneNumber;
     }
 
     /**
@@ -49,8 +76,15 @@ public class MainFormController implements Initializable {
     List productButtonsList = new LinkedList<>();
     List priceList = new LinkedList<>();
 
-    @FXML
-    private AnchorPane mainAnchorPane;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initAllImages();
+        initStartPage();
+        pagingProductHandlers();
+        searchingHandlers();
+        startCategoriesComboBox();
+        checkAuthState();
+    }
 
     @FXML
     private VBox productsVBox;
@@ -83,7 +117,16 @@ public class MainFormController implements Initializable {
     private HBox currProductPropsHBox;
 
     @FXML
-    private VBox filterVBox;
+    private ListView<ComboBox<String>> chsListView;
+
+    @FXML
+    private Button signAccButton;
+
+    @FXML
+    private Button regAccButton;
+
+    @FXML
+    private HBox regHBox;
 
     /**
      * Инициализация всех ImageView приложения
@@ -98,16 +141,33 @@ public class MainFormController implements Initializable {
         }
     }
 
-    /**
-     * Инициализация Scroll Pane'a для Combo Box'a с фильтрами
-     */
-    private void initScrollPaneForFilters() {
-        ScrollPane scroll = new ScrollPane();
-        scroll.setContent(filterVBox);
-        scroll.setLayoutX(17);
-        scroll.setLayoutY(169);
-        scroll.setPrefWidth(268);
-        mainAnchorPane.getChildren().add(scroll);
+    private void checkAuthState() {
+        authState.addListener((observable, oldValue, newValue) -> {
+            // Only if completed
+            if (newValue) {
+                signAccButton.setVisible(false);
+                signAccButton.setDisable(true);
+                regAccButton.setVisible(false);
+
+                regAccButton.setText("Profile (" + userLogin + ")");
+                regAccButton.setOnMouseClicked(event -> {
+                    System.out.println("Something");
+                    showProfile();
+                });
+                regAccButton.setVisible(true);
+            }
+        });
+    }
+
+    public static void showAlertWithoutHeaderText(String title, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+
+        // Header Text: null
+        alert.setHeaderText(null);
+        alert.setContentText(contentText);
+
+        alert.showAndWait();
     }
 
     /**
@@ -170,6 +230,14 @@ public class MainFormController implements Initializable {
         leftImage.setVisible(false);
     }
 
+    public static void addProductToBasket(Product product) {
+        basketProducts.add(product);
+    }
+
+    public static List<Product> getBasketProducts() {
+        return basketProducts;
+    }
+
     /**
      * Загрузка стартовой страницы с товарами
      */
@@ -201,7 +269,7 @@ public class MainFormController implements Initializable {
                 rightImage, leftImage,
                 numberOfPage,
                 currProductPropsHBox,
-                filterVBox
+                chsListView
         );
     }
 
@@ -210,7 +278,7 @@ public class MainFormController implements Initializable {
      */
     private void resetAllFilters() {
         FilterFieldController.resetFilters();
-        filterVBox.getChildren().remove(1, filterVBox.getChildren().size());
+        chsListView.getItems().clear();
         currProductPropsHBox.getChildren().remove(1, currProductPropsHBox.getChildren().size());
         startCategoriesComboBox();
         categoryComboBox.setMouseTransparent(false);
@@ -258,7 +326,7 @@ public class MainFormController implements Initializable {
                 MainApplication.class.getResource("auth.fxml"));
         Stage authorizationWindow = new Stage();
         try {
-            authorizationWindow.setScene(new Scene(loader.load(), 398, 272));
+            authorizationWindow.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -278,7 +346,7 @@ public class MainFormController implements Initializable {
                 MainApplication.class.getResource("regist.fxml"));
         Stage authorizationWindow = new Stage();
         try {
-            authorizationWindow.setScene(new Scene(loader.load(), 402, 291));
+            authorizationWindow.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -294,11 +362,12 @@ public class MainFormController implements Initializable {
 
     @FXML
     void showProductCharacteristics(MouseEvent event) {
+        clickProductButtonHandler(event);
         FXMLLoader loader = new FXMLLoader(
                 MainApplication.class.getResource("show-chs.fxml"));
         Stage authorizationWindow = new Stage();
         try {
-            authorizationWindow.setScene(new Scene(loader.load(), 632, 442));
+            authorizationWindow.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -318,7 +387,7 @@ public class MainFormController implements Initializable {
                 MainApplication.class.getResource("basket.fxml"));
         Stage authorizationWindow = new Stage();
         try {
-            authorizationWindow.setScene(new Scene(loader.load(), 632, 442));
+            authorizationWindow.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -329,6 +398,25 @@ public class MainFormController implements Initializable {
         authorizationWindow.show();
         authorizationWindow.setResizable(false);
 
-        basket = authorizationWindow;
+        basketStage = authorizationWindow;
+    }
+
+    void showProfile() {
+        FXMLLoader loader = new FXMLLoader(
+                MainApplication.class.getResource("profile.fxml"));
+        Stage profileWindow = new Stage();
+        try {
+            profileWindow.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        profileWindow.setTitle("Профиль");
+        profileWindow.initModality(Modality.WINDOW_MODAL);
+        profileWindow.initOwner(MainApplication.primaryStage);
+        profileWindow.show();
+        profileWindow.setResizable(false);
+
+        profileStage = profileWindow;
     }
 }

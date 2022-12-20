@@ -1,26 +1,24 @@
 package ru.mai.coursework.dns.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ListView;
+import ru.mai.coursework.dns.entity.Product;
 
 public class BasketController {
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private AnchorPane mainAnchorPane;
-
-    @FXML
-    private VBox productListInBasket;
+    private ListView<String> productsInBasket;
 
     @FXML
     void initialize() {
+        showProductFromBasket();
+    }
+
+    private void showProductFromBasket() {
+        if (MainFormController.getBasketProducts() != null) {
+            for (Product pr : MainFormController.getBasketProducts()) {
+                productsInBasket.getItems().add(pr.getProductName());
+            }
+        }
     }
 }

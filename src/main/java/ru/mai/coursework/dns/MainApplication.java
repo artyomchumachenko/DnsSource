@@ -22,7 +22,7 @@ public class MainApplication extends Application {
     public void start(Stage newPrimaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 MainApplication.class.getResource("main-form.fxml"));
-        Scene mainScene = new Scene(fxmlLoader.load(), 881, 614);
+        Scene mainScene = new Scene(fxmlLoader.load());
         setScene(mainScene);
 //        newPrimaryStage.getIcons().add(new Image("images/railway_icon.png"));
         newPrimaryStage.setTitle("DNS");
