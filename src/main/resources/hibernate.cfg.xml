@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/dns</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password"/>
+        <property name="hibernate.connection.characterEncoding">UTF-8</property>
+
+        <property name="show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <property name="default_schema">dns</property>
+
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+
+        <mapping class="ru.mai.coursework.dns.entity.Product"/>
+        <mapping class="ru.mai.coursework.dns.entity.Characteristics"/>
+        <mapping class="ru.mai.coursework.dns.entity.ProductCh"/>
+        <mapping class="ru.mai.coursework.dns.entity.Categories"/>
+        <mapping class="ru.mai.coursework.dns.entity.ProductCategory"/>
+        <mapping class="ru.mai.coursework.dns.entity.CategoryCh"/>
+        <mapping class="ru.mai.coursework.dns.entity.ChValues"/>
+        <mapping class="ru.mai.coursework.dns.entity.User"/>
+    </session-factory>
+</hibernate-configuration>
