@@ -4,3 +4,7 @@
 #filterVBox {
     -fx-background-color: #e0e0e0;
 }
+* {
+    -fx-font-family: "ofont.ru_Spectral";
+    -fx-font-weight: bold;
+}

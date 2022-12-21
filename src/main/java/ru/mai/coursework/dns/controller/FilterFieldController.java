@@ -153,9 +153,6 @@ public class FilterFieldController {
             List<ChValues> chValues = new ChValuesHelper().valuesListByCategoryCh(currCategoryCh);
 
             ComboBox<String> chsValueComboBox = new ComboBox<>();
-            Label chNameLabel = new Label(chName);
-            chNameLabel.setPrefSize(251, 28);
-            chNameLabel.setAlignment(Pos.CENTER);
             ObservableList<String> observableValuesList = FXCollections.observableArrayList();
             for (ChValues value : chValues) {
                 observableValuesList.add(value.getValue());
@@ -174,6 +171,7 @@ public class FilterFieldController {
                 valueList.add(chsValueComboBox.getValue());
                 characteristicsList.add(ch);
             });
+            chsValueComboBox.setFocusTraversable(false);
             valueCharacteristicsList.add(chsValueComboBox);
             chsListView.getItems().add(chsValueComboBox);
         }
@@ -219,8 +217,10 @@ public class FilterFieldController {
             HBox currProductPropsHBox
     ) {
         Button testButton = new Button(name);
-        testButton.setFont(Font.font(14));
+        testButton.setFont(Font.font(12));
         testButton.setAlignment(Pos.CENTER_LEFT);
+        testButton.setMouseTransparent(true);
+        testButton.setFocusTraversable(false);
         testButton.setMaxSize(120, 33);
         currProductPropsHBox.getChildren().add(testButton);
     }

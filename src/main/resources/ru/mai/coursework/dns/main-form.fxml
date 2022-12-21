@@ -59,9 +59,9 @@
                 <TextField fx:id="numberOfPage" alignment="CENTER" editable="false" focusTraversable="false" prefHeight="25.0" prefWidth="30.0" text="1" />
             </children>
         </HBox>
-        <HBox fx:id="acceptFilterHBox" layoutX="17.0" layoutY="545.0" prefHeight="30.0" prefWidth="181.0" spacing="5.0">
+        <HBox fx:id="acceptFilterHBox" layoutX="17.0" layoutY="545.0" prefHeight="30.0" prefWidth="200.0" spacing="5.0">
             <children>
-                <Button fx:id="acceptFilters" focusTraversable="false" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Применить" />
+                <Button fx:id="acceptFilters" focusTraversable="false" mnemonicParsing="false" prefHeight="30.0" prefWidth="106.0" text="Применить" />
                 <Button fx:id="cancelFilters" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#cancelFilters" prefHeight="30.0" prefWidth="87.0" text="Сбросить" />
             </children>
         </HBox>

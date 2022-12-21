@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -330,7 +331,7 @@ public class MainFormController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        authorizationWindow.getIcons().add(new Image("ru/mai/coursework/dns/images/sign_in.png"));
         authorizationWindow.setTitle("Вход");
         authorizationWindow.initModality(Modality.WINDOW_MODAL);
         authorizationWindow.initOwner(MainApplication.primaryStage);
@@ -350,7 +351,7 @@ public class MainFormController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        authorizationWindow.getIcons().add(new Image("ru/mai/coursework/dns/images/icon-256x256.png"));
         authorizationWindow.setTitle("Регистрация");
         authorizationWindow.initModality(Modality.WINDOW_MODAL);
         authorizationWindow.initOwner(MainApplication.primaryStage);
@@ -371,7 +372,7 @@ public class MainFormController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        authorizationWindow.getIcons().add(new Image("ru/mai/coursework/dns/images/more-details-icon-3.jpg"));
         authorizationWindow.setTitle("Характеристики");
         authorizationWindow.initModality(Modality.WINDOW_MODAL);
         authorizationWindow.initOwner(MainApplication.primaryStage);
@@ -391,7 +392,7 @@ public class MainFormController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        authorizationWindow.getIcons().add(new Image("ru/mai/coursework/dns/images/shopping_basket.png"));
         authorizationWindow.setTitle("Корзина");
         authorizationWindow.initModality(Modality.WINDOW_MODAL);
         authorizationWindow.initOwner(MainApplication.primaryStage);
@@ -410,7 +411,7 @@ public class MainFormController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        authorizationWindow.getIcons().add(new Image("images/railway_icon.png"));
+        profileWindow.getIcons().add(new Image("ru/mai/coursework/dns/images/more-details-icon-12.jpg"));
         profileWindow.setTitle("Профиль");
         profileWindow.initModality(Modality.WINDOW_MODAL);
         profileWindow.initOwner(MainApplication.primaryStage);
