@@ -19,7 +19,6 @@ import ru.mai.coursework.dns.MainApplication;
 import ru.mai.coursework.dns.entity.Product;
 import ru.mai.coursework.dns.entity.User;
 import ru.mai.coursework.dns.entity.UserProducts;
-import ru.mai.coursework.dns.helpers.ProductHelper;
 import ru.mai.coursework.dns.helpers.UserProductHelper;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
@@ -176,14 +175,16 @@ public class MainFormController implements Initializable {
             if (newValue) {
                 signAccButton.setVisible(false);
                 signAccButton.setDisable(true);
-                regAccButton.setVisible(false);
 
-                regAccButton.setText("Profile (" + userLogin + ")");
+                regAccButton.setText("Профиль (" + userLogin + ")");
                 regAccButton.setOnMouseClicked(event -> {
-                    System.out.println("Something");
                     showProfile();
                 });
-                regAccButton.setVisible(true);
+            } else if (oldValue) {
+                signAccButton.setVisible(true);
+                signAccButton.setDisable(false);
+                regAccButton.setText("Регистрация");
+                regAccButton.setOnMouseClicked(this::showRegistrationWindow);
             }
         });
     }
@@ -197,6 +198,17 @@ public class MainFormController implements Initializable {
         alert.setContentText(contentText);
 
         alert.showAndWait();
+    }
+
+    public static String showConfirmationAlertBeforeExitFromProfile() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);// line 1
+        alert.setTitle("Выход из личного кабинета");// line 2
+        alert.setHeaderText("Пожалуйста подтвердите!");// line 3
+        alert.setContentText("Вы точно хотите выйти из личного кабинета?");// line 4
+        alert.showAndWait(); // line 5
+        ButtonType buttonType = alert.getResult();
+        System.out.println(buttonType.getText());
+        return buttonType.getText();
     }
 
     /**
@@ -265,6 +277,10 @@ public class MainFormController implements Initializable {
 
     public static List<Product> getBasketProducts() {
         return basketProducts;
+    }
+
+    public static void clearBasketProducts() {
+        basketProducts = new ArrayList<>();
     }
 
     /**
