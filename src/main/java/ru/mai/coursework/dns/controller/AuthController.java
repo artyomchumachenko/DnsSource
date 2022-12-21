@@ -47,8 +47,7 @@ public class AuthController {
             user = userHelper.getUsersByLoginAndPassword(login, password);
         }
         if (user != null) {
-            MainFormController.setUserLogin(user.getLogin());
-            MainFormController.setUserPhoneNumber(user.getPhone());
+            MainFormController.setUser(user);
             MainFormController.authStage.close();
             MainFormController.authState.setValue(true);
             MainFormController.showAlertWithoutHeaderText(

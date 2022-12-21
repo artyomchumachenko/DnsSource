@@ -34,78 +34,6 @@ import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable {
 
-    /**
-     * Состояние окна авторизации
-     */
-    public static Stage authStage = null;
-    /**
-     * Состояние окна регистрации
-     */
-    public static Stage regStage = null;
-    /**
-     * Состояние окна характеристик товара
-     */
-    public static Stage showChs = null;
-    /**
-     * Состояние окна корзины
-     */
-    public static Stage basketStage = null;
-
-    public static Stage profileStage = null;
-
-    public static BooleanProperty authState = new SimpleBooleanProperty(false);
-
-    private static List<Product> basketProducts = new ArrayList<>(); // ?????????
-
-    private static int lastIndexInBasket = 0;
-
-    private static User user = null;
-    private static String userLogin = "";
-    private static String userPhoneNumber = "";
-
-    public static User getUser() {
-        return user;
-    }
-
-    public static void setUser(User user) {
-        MainFormController.user = user;
-    }
-
-    public static String getUserLogin() {
-        return userLogin;
-    }
-
-    public static void loadBasketAfterUserAuth() {
-        UserProductHelper userProductHelper = new UserProductHelper();
-        List<UserProducts> userProducts = userProductHelper.userProductsByUserId(MainFormController.getUser());
-        for (UserProducts up : userProducts) {
-            basketProducts.add(up.getProduct());
-        }
-        lastIndexInBasket = basketProducts.size();
-    }
-
-    public static int getLastIndexInBasket() {
-        return lastIndexInBasket;
-    }
-
-    public static void setUserLogin(String userLogin) {
-        MainFormController.userLogin = userLogin;
-    }
-
-    public static String getUserPhoneNumber() {
-        return userPhoneNumber;
-    }
-
-    public static void setUserPhoneNumber(String userPhoneNumber) {
-        MainFormController.userPhoneNumber = userPhoneNumber;
-    }
-
-    /**
-     * List, содержащий кнопки "Товаров" и "Цен"
-     */
-    List productButtonsList = new LinkedList<>();
-    List priceList = new LinkedList<>();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initAllImages();
@@ -155,8 +83,69 @@ public class MainFormController implements Initializable {
     @FXML
     private Button regAccButton;
 
-    @FXML
-    private HBox regHBox;
+    /**
+     * Окно авторизации
+     */
+    public static Stage authStage = null;
+    /**
+     * Окно регистрации
+     */
+    public static Stage regStage = null;
+    /**
+     * Окно характеристик товара
+     */
+    public static Stage showChs = null;
+    /**
+     * Окно корзины
+     */
+    public static Stage basketStage = null;
+    /**
+     * Окно профиля у пользователя
+     */
+    public static Stage profileStage = null;
+    /**
+     * Состояние пользователя (Авторизован или нет)
+     */
+    public static BooleanProperty authState = new SimpleBooleanProperty(false);
+    /**
+     * Список текущих товаров добавленных в корзину
+     */
+    private static List<Product> basketProducts = new ArrayList<>(); // ?????????
+    /**
+     * Индекс с которого мы будем сохранять новые добавленные товары в базу данных
+     */
+    private static int lastIndexInBasket = 0;
+    /**
+     * Пользователь, авторизованный в нашей системе
+     */
+    private static User user = null;
+    public static User getUser() {
+        return user;
+    }
+    public static void setUser(User user) {
+        MainFormController.user = user;
+    }
+    public static int getLastIndexInBasket() {
+        return lastIndexInBasket;
+    }
+
+    /**
+     * Загрузка корзины авторизованного пользователя из базы данных
+     */
+    public static void loadBasketAfterUserAuth() {
+        UserProductHelper userProductHelper = new UserProductHelper();
+        List<UserProducts> userProducts = userProductHelper.userProductsByUserId(MainFormController.getUser());
+        for (UserProducts up : userProducts) {
+            basketProducts.add(up.getProduct());
+        }
+        lastIndexInBasket = basketProducts.size();
+    }
+
+    /**
+     * List, содержащий кнопки "Товаров" и "Цен"
+     */
+    List productButtonsList = new LinkedList<>();
+    List priceList = new LinkedList<>();
 
     /**
      * Инициализация всех ImageView приложения
@@ -171,6 +160,10 @@ public class MainFormController implements Initializable {
         }
     }
 
+    /**
+     * Слушатель состояния авторизации пользователя
+     * Если пользователь авторизовался, и если пользователь вышел из личного кабинета
+     */
     private void checkAuthState() {
         authState.addListener((observable, oldValue, newValue) -> {
             // Only if completed
@@ -178,7 +171,7 @@ public class MainFormController implements Initializable {
                 signAccButton.setVisible(false);
                 signAccButton.setDisable(true);
 
-                regAccButton.setText("Профиль (" + userLogin + ")");
+                regAccButton.setText("Профиль (" + user.getLogin() + ")");
                 regAccButton.setOnMouseClicked(event -> {
                     showProfile();
                 });
@@ -279,6 +272,10 @@ public class MainFormController implements Initializable {
 
     public static List<Product> getBasketProducts() {
         return basketProducts;
+    }
+
+    public static void deleteProductByIndex(int index) {
+        basketProducts.remove(index);
     }
 
     public static void clearBasketProducts() {
