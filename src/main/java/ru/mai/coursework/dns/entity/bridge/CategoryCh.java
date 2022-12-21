@@ -1,8 +1,10 @@
-package ru.mai.coursework.dns.entity;
+package ru.mai.coursework.dns.entity.bridge;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ru.mai.coursework.dns.entity.Categories;
+import ru.mai.coursework.dns.entity.Characteristics;
 
 import java.util.List;
 

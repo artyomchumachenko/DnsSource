@@ -1,4 +1,4 @@
-package ru.mai.coursework.dns.helpers;
+package ru.mai.coursework.dns.helpers.bridge;
 
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -9,8 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import ru.mai.coursework.dns.HibernateUtil;
 import ru.mai.coursework.dns.entity.*;
+import ru.mai.coursework.dns.entity.bridge.UserProducts;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class UserProductHelper {

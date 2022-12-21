@@ -16,10 +16,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.mai.coursework.dns.MainApplication;
+import ru.mai.coursework.dns.controller.branch.FilterFieldController;
+import ru.mai.coursework.dns.controller.branch.ProductViewController;
 import ru.mai.coursework.dns.entity.Product;
 import ru.mai.coursework.dns.entity.User;
-import ru.mai.coursework.dns.entity.UserProducts;
-import ru.mai.coursework.dns.helpers.UserProductHelper;
+import ru.mai.coursework.dns.entity.bridge.UserProducts;
+import ru.mai.coursework.dns.helpers.bridge.UserProductHelper;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
 import java.io.FileNotFoundException;

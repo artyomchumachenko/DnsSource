@@ -1,14 +1,14 @@
-package ru.mai.coursework.dns.controller;
+package ru.mai.coursework.dns.controller.branch;
 
-import com.sun.tools.javac.Main;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import ru.mai.coursework.dns.controller.MainFormController;
 import ru.mai.coursework.dns.entity.Product;
-import ru.mai.coursework.dns.entity.ProductCategory;
-import ru.mai.coursework.dns.entity.ProductCh;
+import ru.mai.coursework.dns.entity.bridge.ProductCategory;
+import ru.mai.coursework.dns.entity.bridge.ProductCh;
 import ru.mai.coursework.dns.helpers.ProductHelper;
 
 import java.util.LinkedList;

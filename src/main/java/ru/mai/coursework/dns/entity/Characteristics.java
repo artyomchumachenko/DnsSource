@@ -3,6 +3,8 @@ package ru.mai.coursework.dns.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ru.mai.coursework.dns.entity.bridge.CategoryCh;
+import ru.mai.coursework.dns.entity.bridge.ProductCh;
 
 import java.io.Serializable;
 import java.util.List;

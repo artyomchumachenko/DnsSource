@@ -21,12 +21,12 @@
 
         <mapping class="ru.mai.coursework.dns.entity.Product"/>
         <mapping class="ru.mai.coursework.dns.entity.Characteristics"/>
-        <mapping class="ru.mai.coursework.dns.entity.ProductCh"/>
+        <mapping class="ru.mai.coursework.dns.entity.bridge.ProductCh"/>
         <mapping class="ru.mai.coursework.dns.entity.Categories"/>
-        <mapping class="ru.mai.coursework.dns.entity.ProductCategory"/>
-        <mapping class="ru.mai.coursework.dns.entity.CategoryCh"/>
-        <mapping class="ru.mai.coursework.dns.entity.ChValues"/>
+        <mapping class="ru.mai.coursework.dns.entity.bridge.ProductCategory"/>
+        <mapping class="ru.mai.coursework.dns.entity.bridge.CategoryCh"/>
+        <mapping class="ru.mai.coursework.dns.entity.bridge.ChValues"/>
         <mapping class="ru.mai.coursework.dns.entity.User"/>
-        <mapping class="ru.mai.coursework.dns.entity.UserProducts"/>
+        <mapping class="ru.mai.coursework.dns.entity.bridge.UserProducts"/>
     </session-factory>
 </hibernate-configuration>

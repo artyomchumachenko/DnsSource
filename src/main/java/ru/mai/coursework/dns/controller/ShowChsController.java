@@ -4,8 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import ru.mai.coursework.dns.controller.branch.ProductViewController;
 import ru.mai.coursework.dns.entity.Product;
-import ru.mai.coursework.dns.entity.ProductCh;
+import ru.mai.coursework.dns.entity.bridge.ProductCh;
 
 public class ShowChsController {
 

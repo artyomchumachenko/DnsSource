@@ -1,6 +1,5 @@
 package ru.mai.coursework.dns;
 
-import com.sun.tools.javac.Main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,13 +9,11 @@ import javafx.scene.text.Font;
 import ru.mai.coursework.dns.controller.MainFormController;
 import ru.mai.coursework.dns.entity.Product;
 import ru.mai.coursework.dns.entity.User;
-import ru.mai.coursework.dns.entity.UserProducts;
-import ru.mai.coursework.dns.helpers.UserProductHelper;
+import ru.mai.coursework.dns.entity.bridge.UserProducts;
+import ru.mai.coursework.dns.helpers.bridge.UserProductHelper;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainApplication extends Application {
     public static Stage primaryStage;

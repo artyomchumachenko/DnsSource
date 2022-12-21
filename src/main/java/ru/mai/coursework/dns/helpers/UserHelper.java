@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import ru.mai.coursework.dns.HibernateUtil;
-import ru.mai.coursework.dns.entity.ProductCategory;
 import ru.mai.coursework.dns.entity.User;
 
 import java.util.List;

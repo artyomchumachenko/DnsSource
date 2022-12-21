@@ -1,4 +1,4 @@
-package ru.mai.coursework.dns.entity;
+package ru.mai.coursework.dns.entity.bridge;
 
 import jakarta.persistence.*;
 import lombok.Getter;

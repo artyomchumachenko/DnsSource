@@ -1,4 +1,4 @@
-package ru.mai.coursework.dns.helpers;
+package ru.mai.coursework.dns.helpers.bridge;
 
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -7,8 +7,8 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.mai.coursework.dns.HibernateUtil;
-import ru.mai.coursework.dns.entity.CategoryCh;
-import ru.mai.coursework.dns.entity.ChValues;
+import ru.mai.coursework.dns.entity.bridge.CategoryCh;
+import ru.mai.coursework.dns.entity.bridge.ChValues;
 
 import java.util.List;
 

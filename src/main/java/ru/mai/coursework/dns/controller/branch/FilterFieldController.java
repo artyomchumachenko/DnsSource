@@ -1,4 +1,4 @@
-package ru.mai.coursework.dns.controller;
+package ru.mai.coursework.dns.controller.branch;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,7 +8,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import ru.mai.coursework.dns.entity.*;
+import ru.mai.coursework.dns.entity.bridge.CategoryCh;
+import ru.mai.coursework.dns.entity.bridge.ChValues;
+import ru.mai.coursework.dns.entity.bridge.ProductCategory;
+import ru.mai.coursework.dns.entity.bridge.ProductCh;
 import ru.mai.coursework.dns.helpers.*;
+import ru.mai.coursework.dns.helpers.bridge.CategoryChHelper;
+import ru.mai.coursework.dns.helpers.bridge.ChValuesHelper;
 
 import java.util.LinkedList;
 import java.util.List;
