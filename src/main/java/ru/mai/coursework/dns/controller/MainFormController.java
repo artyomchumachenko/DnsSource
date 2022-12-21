@@ -17,6 +17,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ru.mai.coursework.dns.MainApplication;
 import ru.mai.coursework.dns.entity.Product;
+import ru.mai.coursework.dns.entity.User;
+import ru.mai.coursework.dns.entity.UserProducts;
+import ru.mai.coursework.dns.helpers.ProductHelper;
+import ru.mai.coursework.dns.helpers.UserProductHelper;
 import ru.mai.coursework.dns.loaders.ImageLoader;
 
 import java.io.FileNotFoundException;
@@ -52,11 +56,35 @@ public class MainFormController implements Initializable {
 
     private static List<Product> basketProducts = new ArrayList<>(); // ?????????
 
+    private static int lastIndexInBasket = 0;
+
+    private static User user = null;
     private static String userLogin = "";
     private static String userPhoneNumber = "";
 
+    public static User getUser() {
+        return user;
+    }
+
+    public static void setUser(User user) {
+        MainFormController.user = user;
+    }
+
     public static String getUserLogin() {
         return userLogin;
+    }
+
+    public static void loadBasketAfterUserAuth() {
+        UserProductHelper userProductHelper = new UserProductHelper();
+        List<UserProducts> userProducts = userProductHelper.userProductsByUserId(MainFormController.getUser());
+        for (UserProducts up : userProducts) {
+            basketProducts.add(up.getProduct());
+        }
+        lastIndexInBasket = basketProducts.size();
+    }
+
+    public static int getLastIndexInBasket() {
+        return lastIndexInBasket;
     }
 
     public static void setUserLogin(String userLogin) {

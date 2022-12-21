@@ -27,5 +27,6 @@
         <mapping class="ru.mai.coursework.dns.entity.CategoryCh"/>
         <mapping class="ru.mai.coursework.dns.entity.ChValues"/>
         <mapping class="ru.mai.coursework.dns.entity.User"/>
+        <mapping class="ru.mai.coursework.dns.entity.UserProducts"/>
     </session-factory>
 </hibernate-configuration>

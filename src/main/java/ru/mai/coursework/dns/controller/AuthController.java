@@ -55,6 +55,9 @@ public class AuthController {
                     "Вход",
                     "Вход выполнен успешно, " + user.getLogin() + ", приятной работы!"
             );
+            MainFormController.setUser(user);
+            System.out.println("Load user basket");
+            MainFormController.loadBasketAfterUserAuth();
         } else {
             System.out.println("Неверный логин или пароль");
             MainFormController.showAlertWithoutHeaderText(

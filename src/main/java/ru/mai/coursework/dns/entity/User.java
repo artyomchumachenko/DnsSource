@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -25,4 +26,7 @@ public class User implements Serializable {
 
     @Column(name = "phone")
     private String phone;
+
+    @OneToMany(mappedBy = "user")
+    List<UserProducts> userProducts;
 }
